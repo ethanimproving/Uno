@@ -5,4 +5,8 @@ public class Game {
         var deck = new Deck();
         System.out.println("Count: " + deck.getDeck().size());
     }
+
+    public void takeTurn() {
+
+    }
 }

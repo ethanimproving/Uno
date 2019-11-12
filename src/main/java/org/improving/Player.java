@@ -1,15 +1,23 @@
 package org.improving;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+
 public class Player {
-    private Hand hand;
+//    private Hand hand;
+    private LinkedList<Card> hand;
 
     public Player(Deck deck) {
-        this.hand = new Hand(deck, 7);
+        initializeHand(deck, 7);
+        Collections.shuffle(hand);
     }
 
-    public Card takeTurn(Deck deck) {
-        var topCard = hand.getHand().get(0);
-        return hand.play(deck, topCard);
+    private void initializeHand (Deck deck, int size) {
+        hand = new LinkedList<>();
+        for (int i = 0; i < size; i++) {
+            this.hand.add(deck.draw());
+        }
     }
 
     public boolean isPlayable(Deck deck, Card card) {
@@ -23,7 +31,18 @@ public class Player {
         return false;
     }
 
-    public Hand getHand() {
+    public Card play(Deck deck, Card card) {
+        hand.remove(card);
+        deck.getDiscard().add(card);
+        return card;
+    }
+
+    public Card takeTurn(Deck deck) {
+        var topCard = hand.getLast();
+        return play(deck, topCard);
+    }
+
+    public LinkedList<Card> getHand() {
         return hand;
     }
 }

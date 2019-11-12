@@ -1,16 +1,14 @@
 package org.improving;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Deck {
-    private List<Card> deck;
-    private List<Card> discard;
+    private LinkedList<Card> deck;
+    private LinkedList<Card> discard;
 
     public Deck() {
-        deck = new ArrayList<>();
-        discard = new ArrayList<>();
+        deck = new LinkedList<>();
+        discard = new LinkedList<>();
         for (var face : Face.values()) {
             for (var color : Color.values()) {
                 if (face.getValue() != 50) {
@@ -19,21 +17,20 @@ public class Deck {
                 deck.add(new Card(color, face));
             }
         }
+        Collections.shuffle(deck);
     }
 
     public Card draw() {
-        var random = new Random().nextInt(deck.size());
-        var card = deck.get(random);
+        var card = deck.getLast();
         deck.remove(card);
-        discard.add(card);
         return card;
     }
 
-    public List<Card> getDeck() {
+    public LinkedList<Card> getDeck() {
         return deck;
     }
 
-    public List<Card> getDiscard() {
+    public LinkedList<Card> getDiscard() {
         return discard;
     }
 }

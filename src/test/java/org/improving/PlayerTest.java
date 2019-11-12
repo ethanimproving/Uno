@@ -3,6 +3,7 @@ package org.improving;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,13 +18,52 @@ class PlayerTest {
         // Arrange
         deck = new Deck();
         player = new Player(deck);
-        hand = player.getHand().getHand();
+        hand = player.getHand();
         hand.clear();
         deck.getDiscard().clear();
     }
 
     @Test
     void takeTurn() {
+    }
+
+    @Test
+    void initializeHand_should_contain_x_cards() {
+        // Act
+        var result = new Player(new Deck()).getHand().size();
+
+        // Assert
+        assertEquals(7, result);
+    }
+
+    @Test
+    void Hand_of_7_cards_should_leave_deck_with_105_cards() {
+        // Act
+        var result = deck.getDeck().size();
+
+        // Assert
+        assertEquals(112-7, result);
+    }
+
+    @Test
+    void play_should_remove_a_card_from_hand() {
+        // Arrange
+        player.getHand().addAll(Arrays.asList(
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five)
+        ));
+
+        // Act
+        player.play(deck, player.getHand().getLast());
+        var result = player.getHand().size();
+
+        // Assert
+        assertEquals(6, result);
     }
 
     @Test
