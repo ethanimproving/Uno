@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class Player {
+    private String name = "Ethan";
     private LinkedList<Card> hand;
 
     public Player(Deck deck) {
@@ -19,7 +20,7 @@ public class Player {
     }
 
     public boolean isPlayable(Deck deck, Card card) {
-        var deckTopCard = deck.getDiscard().get(0);
+        var deckTopCard = deck.getDiscard().getLast();
 
         if (deckTopCard.getColor() == card.getColor() ||
             deckTopCard.getFace() == card.getFace() ||
@@ -40,13 +41,20 @@ public class Player {
             if (isPlayable(deck, card)) {
                 hand.remove(card);
                 deck.getDiscard().add(card);
+                System.out.println(name + " has played " + card + " and finished turn.");
                 return;
             }
         }
-        hand.add(deck.draw());
+        var card = deck.draw();
+        hand.add(card);
+        System.out.println(name + " has drawn a " + card + " and finished turn.");
     }
 
     public LinkedList<Card> getHand() {
         return hand;
+    }
+
+    public String getName() {
+        return name;
     }
 }

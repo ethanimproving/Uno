@@ -15,7 +15,7 @@ public enum Face {
     Reverse(20),
     Skip(20),
     Wild(50),
-    WildDraw(50);
+    WildDrawFour(50);
 
     private int value;
 

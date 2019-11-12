@@ -16,4 +16,9 @@ public class Card {
     public Face getFace() {
         return face;
     }
+
+    @Override
+    public String toString() {
+        return (color == null ? "" : color.toString())+face.toString();
+    }
 }
