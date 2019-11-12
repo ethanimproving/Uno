@@ -188,4 +188,21 @@ class PlayerTest {
         //Assert
         assertEquals(3, result);
     }
+
+    @Test
+    void takeTurn_Should_Choose_A_Color_For_Wild_Card() {
+        //Arrange
+        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        hand.clear();
+        hand.addAll(Arrays.asList(
+                new Card(null, Face.Wild)
+        ));
+
+        //Act
+        player.takeTurn(deck);
+        var result = deck.getDeck().getLast().getColor() != null;
+
+        //Assert
+        assertTrue(result);
+    }
 }

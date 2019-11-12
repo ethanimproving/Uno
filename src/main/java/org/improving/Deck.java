@@ -13,7 +13,7 @@ public class Deck {
         for (var face : Face.values()) {
             for (var color : Color.values()) {
                 if (face.getValue() == 50) {
-                    deck.add(new Card(color, face));
+                    deck.add(new Card(null, face));
                 } else {
                     deck.add(new Card(color, face));
                     deck.add(new Card(color, face));
@@ -31,11 +31,7 @@ public class Deck {
             return card;
         } catch (NoSuchElementException e) {
             System.out.println("GAME OVER. The deck has been replenished with cards from the discard pile.");
-
-            // Get top card of discard.
             replenishDeck();
-
-//            System.exit(0);
         }
         return null;
     }

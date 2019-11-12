@@ -1,12 +1,16 @@
 package org.improving;
 
 public class Card {
-    private final Color color;
+    private Color color;
     private final Face face;
 
     public Card(Color color, Face face) {
         this.color = color;
         this.face = face;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public Color getColor() {

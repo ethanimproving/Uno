@@ -2,6 +2,7 @@ package org.improving;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Player {
     private String name = "Ethan";
@@ -39,6 +40,7 @@ public class Player {
     public void takeTurn(Deck deck) {
         for (var card : hand) {
             if (isPlayable(deck, card)) {
+                if (card.getColor() == null) chooseWildColor(card);
                 hand.remove(card);
                 deck.getDiscard().add(card);
                 System.out.println(name + " has played " + card + " and finished turn.");
@@ -48,6 +50,12 @@ public class Player {
         var card = deck.draw();
         hand.add(card);
         System.out.println(name + " has drawn a " + card + " and finished turn.");
+    }
+
+    private void chooseWildColor(Card card) {
+        // TODO: Prompt user to choose color. Hint: Choose different picking strategies for bots.
+        var random = new Random().nextInt(4);
+        card.setColor(Color.values()[random]);
     }
 
     public LinkedList<Card> getHand() {
