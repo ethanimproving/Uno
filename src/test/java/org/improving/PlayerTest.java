@@ -24,10 +24,6 @@ class PlayerTest {
     }
 
     @Test
-    void takeTurn() {
-    }
-
-    @Test
     void initializeHand_should_contain_x_cards() {
         // Act
         var result = new Player(new Deck()).getHand().size();
@@ -116,5 +112,80 @@ class PlayerTest {
 
         // Assert
         assertTrue(result);
+    }
+
+    @Test
+    void takeTurn_Should_Remove_One_Card_From_Hand() {
+        //Arrange
+        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        player.getHand().addAll(Arrays.asList(
+                new Card(Color.Blue, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Green, Face.Five),
+                new Card(Color.Yellow, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Blue, Face.Five),
+                new Card(Color.Red, Face.Five)
+        ));
+        //Act
+        player.takeTurn(deck);
+        var result = player.getHand().size();
+
+        //Assert
+        assertEquals(6, result);
+    }
+    @Test
+    void takeTurn_Should_Add_One_Card_To_DiscardPile() {
+        //Arrange
+        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        player.getHand().addAll(Arrays.asList(
+                new Card(Color.Blue, Face.Five)
+        ));
+
+        //Act
+        player.takeTurn(deck);
+        var result = deck.getDiscard().size();
+
+        //Assert
+        assertEquals(2, result);
+    }
+    @Test
+    void takeTurn_Should_Play_First_Playable_Card() {
+        //Arrange
+        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        hand.clear();
+        hand.addAll(Arrays.asList(
+                new Card(Color.Red, Face.Seven),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Green, Face.Six),
+                new Card(Color.Yellow, Face.Zero),
+                new Card(Color.Blue, Face.Two),
+                new Card(Color.Red, Face.Three),
+                new Card(Color.Green, Face.One)
+        ));
+        //Act
+        player.takeTurn(deck);
+        var result = deck.getDiscard().size();
+
+        //Assert
+        assertEquals(2, result);
+
+    }
+    @Test
+    void takeTurn_Should_Draw_Card_If_Not_Playable() {
+        //Arrange
+        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        hand.clear();
+        hand.addAll(Arrays.asList(
+                new Card(Color.Red, Face.Seven),
+                new Card(Color.Red, Face.Five)
+
+        ));
+        //Act
+        player.takeTurn(deck);
+        var result = hand.size();
+
+        //Assert
+        assertEquals(3, result);
     }
 }

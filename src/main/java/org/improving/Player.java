@@ -1,11 +1,9 @@
 package org.improving;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
 public class Player {
-//    private Hand hand;
     private LinkedList<Card> hand;
 
     public Player(Deck deck) {
@@ -37,9 +35,15 @@ public class Player {
         return card;
     }
 
-    public Card takeTurn(Deck deck) {
-        var topCard = hand.getLast();
-        return play(deck, topCard);
+    public void takeTurn(Deck deck) {
+        for (var card : hand) {
+            if (isPlayable(deck, card)) {
+                hand.remove(card);
+                deck.getDiscard().add(card);
+                return;
+            }
+        }
+        hand.add(deck.draw());
     }
 
     public LinkedList<Card> getHand() {
