@@ -38,6 +38,17 @@ public class Game {
         return deck.getDeck();
     }
 
+    public static boolean isPlayable(Deck deck, Card card) {
+        var deckTopCard = deck.getDiscard().getLast();
+
+        if (deckTopCard.getColor() == card.getColor() ||
+                deckTopCard.getFace() == card.getFace() ||
+                card.getFace().getValue() == 50) {
+            return true;
+        };
+        return false;
+    }
+
     public List<Player> getPlayers() {
         return players;
     }

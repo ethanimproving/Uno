@@ -20,17 +20,6 @@ public class Player {
         }
     }
 
-    public boolean isPlayable(Deck deck, Card card) {
-        var deckTopCard = deck.getDiscard().getLast();
-
-        if (deckTopCard.getColor() == card.getColor() ||
-            deckTopCard.getFace() == card.getFace() ||
-            card.getFace().getValue() == 50) {
-            return true;
-        };
-        return false;
-    }
-
     public Card play(Deck deck, Card card) {
         hand.remove(card);
         deck.getDiscard().add(card);
@@ -39,11 +28,13 @@ public class Player {
 
     public void takeTurn(Deck deck) {
         for (var card : hand) {
-            if (isPlayable(deck, card)) {
+            if (Game.isPlayable(deck, card)) {
                 if (card.getColor() == null) chooseWildColor(card);
+
                 hand.remove(card);
                 deck.getDiscard().add(card);
                 System.out.println(name + " has played " + card + " and finished turn.");
+                if (card.getFace() == Face.Draw2) { }
                 return;
             }
         }
