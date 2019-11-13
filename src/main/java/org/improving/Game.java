@@ -4,6 +4,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -21,7 +22,10 @@ public class Game {
     public Game(Deck deck) {
         this.deck = deck;
         this.players = new ArrayList<>();
-        this.players.add(new Player(deck));
+        this.players.addAll(Arrays.asList(
+                new Player("David O\'Hera", this.deck),
+                new Player("Tim Rayburn", this.deck)
+        ));
         initializeDiscardPile();
     }
 
@@ -30,13 +34,25 @@ public class Game {
     }
 
     public void startGame() {
-        var player = this.players.get(0);
         int turns = 0;
-        while (player.getHand().size() > 0) {
-            player.takeTurn(deck);
-            turns++;
+        while (isInProgress()) {
+            for (var player : players) {
+                player.takeTurn(deck);
+                turns++;
+            }
         }
-        System.out.println(player.getName() + " took " + turns + " turns to win the game.");
+        System.out.println(turns + " turns to win the game.");
+    }
+
+    private boolean isInProgress() {
+        // TODO: raise exception when game over and catch here.
+        for (var player : players) {
+            if (player.getHand().size() <= 0) {
+                System.out.print(player.getName() + " took ");
+                return false;
+            }
+        }
+        return true;
     }
 
     public List<Card> getDeck() {
@@ -57,6 +73,8 @@ public class Game {
     public void cardBehavior(Player player, Card card) {
         if (card.getFace() == Face.Draw2) {
             player.getHand().add(this.deck.draw());
+            player.getHand().add(this.deck.draw());
+            // TODO: skip turn
         }
     }
 

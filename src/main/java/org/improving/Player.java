@@ -5,10 +5,17 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class Player {
-    private String name = "Ethan";
+    private String name;
     private LinkedList<Card> hand;
 
     public Player(Deck deck) {
+        this.name = "Player";
+        initializeHand(deck, 7);
+        Collections.shuffle(hand);
+    }
+
+    public Player(String name, Deck deck) {
+        this.name = name;
         initializeHand(deck, 7);
         Collections.shuffle(hand);
     }
