@@ -34,6 +34,9 @@ public class Player {
     }
 
     public void takeTurn(Deck deck) {
+        if (deck.getDiscard().getLast().getFace() == Face.Draw2) {
+
+        }
         for (var card : hand) {
             if (Game.isPlayable(deck, card)) {
                 if (card.getColor() == null) chooseWildColor(card);

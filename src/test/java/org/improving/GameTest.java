@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,7 +38,7 @@ class GameTest {
     void startGame_should_have_declare_first_player_to_run_out_of_cards_as_winner() {
         // Arrange
         game.getDiscard().add(new Card(Color.Blue, Face.Five));
-        game.getDeck().addAll(Arrays.asList(
+        game.getDeckPile().addAll(Arrays.asList(
                 new Card(Color.Blue, Face.Five),
                 new Card(Color.Blue, Face.Five),
                 new Card(Color.Blue, Face.Five)
@@ -115,4 +114,31 @@ class GameTest {
         // Assert
         assertTrue(result);
     }
+
+    @Test
+    void isPlayable_should_return_false_when_draw_2() {
+        // Arrange
+        game.getDiscard().add(new Card(Color.Yellow, Face.Draw2));
+        var card = new Card(Color.Yellow, Face.Eight);
+
+        // Act
+        var result = game.isPlayable(game.getDeck(), card);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    void isPlayable_should_return_true_when_two_draw_2s() {
+        // Arrange
+        game.getDiscard().add(new Card(Color.Yellow, Face.Draw2));
+        var card = new Card(Color.Yellow, Face.Draw2);
+
+        // Act
+        var result = game.isPlayable(game.getDeck(), card);
+
+        // Assert
+        assertTrue(result);
+    }
+
 }

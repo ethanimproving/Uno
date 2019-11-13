@@ -16,7 +16,7 @@ public class Game {
         var context = new AnnotationConfigApplicationContext(SpringContext.class);
         var game = context.getBean(Game.class);
         game.startGame();
-        System.out.println("Count: " + game.getDeck());
+        System.out.println("Count: " + game.getDeckPile());
     }
 
     public Game(Deck deck) {
@@ -51,8 +51,12 @@ public class Game {
         }
     }
 
-    public List<Card> getDeck() {
+    public List<Card> getDeckPile() {
         return deck.getDeck();
+    }
+
+    public Deck getDeck() {
+        return deck;
     }
 
     public List<Card> getDiscard() {
@@ -62,12 +66,14 @@ public class Game {
     public static boolean isPlayable(Deck deck, Card card) {
         var deckTopCard = deck.getDiscard().getLast();
         // TODO: Ethan has drawn a null and finished turn -> NullPointerException
-        if (deckTopCard.getColor() == card.getColor() ||
+        if (deckTopCard.getFace() == Face.Draw2) {
+            if (card.getFace() == Face.Draw2) return true;
+            return false;
+        }
+
+        return deckTopCard.getColor() == card.getColor() ||
                 deckTopCard.getFace() == card.getFace() ||
-                card.getFace().getValue() == 50) {
-            return true;
-        };
-        return false;
+                card.getFace().getValue() == 50;
     }
 
     public void cardBehavior(Player player, Card card) {
