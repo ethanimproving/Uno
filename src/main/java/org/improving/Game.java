@@ -35,24 +35,20 @@ public class Game {
 
     public void startGame() {
         int turns = 0;
-        while (isInProgress()) {
+        while (true) {
             for (var player : players) {
+
+                // Take turn.
                 player.takeTurn(deck);
                 turns++;
-            }
-        }
-        System.out.println(turns + " turns to win the game.");
-    }
 
-    private boolean isInProgress() {
-        // TODO: raise exception when game over and catch here.
-        for (var player : players) {
-            if (player.getHand().size() <= 0) {
-                System.out.print(player.getName() + " took ");
-                return false;
+                // Check if player has won.
+                if (player.getHand().size() <= 0) {
+                    System.out.println("\n" + player.getName() + " has won the game! It lasted " + turns + " turns.");
+                    return;
+                }
             }
         }
-        return true;
     }
 
     public List<Card> getDeck() {
