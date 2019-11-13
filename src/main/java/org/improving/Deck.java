@@ -1,7 +1,10 @@
 package org.improving;
 
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 
+@Component
 public class Deck {
     private LinkedList<Card> deck;
     private LinkedList<Card> discard;
