@@ -3,6 +3,7 @@ package org.improving;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,13 +12,22 @@ class GameTest {
 
     Deck deck;
     Player player;
+    Player player2;
+    Game game;
 
     @BeforeEach
     void init() {
         // Arrange
         deck = new Deck();
-        player = new Player(deck);
+        game = new Game(deck);
+        game.getPlayers().clear();
+        game.addPlayer("Ethan");
+        game.addPlayer("Jennifer");
+
+        player = game.getPlayers().get(0);
+        player2 = game.getPlayers().get(1);
         player.getHand().clear();
+        player2.getHand().clear();
         deck.getDiscard().clear();
     }
 
@@ -26,7 +36,32 @@ class GameTest {
     }
 
     @Test
-    void startGame() {
+    void startGame_should_have_declare_first_player_to_run_out_of_cards_as_winner() {
+        // Arrange
+        game.getDiscard().add(new Card(Color.Blue, Face.Five));
+        game.getDeck().addAll(Arrays.asList(
+                new Card(Color.Blue, Face.Five),
+                new Card(Color.Blue, Face.Five),
+                new Card(Color.Blue, Face.Five)
+        ));
+        game.getPlayers().get(0).getHand().addAll(Arrays.asList(
+                new Card(Color.Blue, Face.Five),
+                new Card(Color.Blue, Face.Five),
+                new Card(Color.Blue, Face.Five)
+        ));
+        game.getPlayers().get(1).getHand().addAll(Arrays.asList(
+                new Card(Color.Blue, Face.Five)
+        ));
+
+        // Act
+        game.startGame();
+        var result = game.getPlayers().get(1).getHand().size();
+        var ethanscards = game.getPlayers().get(0).getHand().size();
+
+        // Assert
+        assertEquals(0, result);
+        assertEquals(2, ethanscards);
+
     }
 
     @Test

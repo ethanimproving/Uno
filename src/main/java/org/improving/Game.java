@@ -55,6 +55,10 @@ public class Game {
         return deck.getDeck();
     }
 
+    public List<Card> getDiscard() {
+        return deck.getDiscard();
+    }
+
     public static boolean isPlayable(Deck deck, Card card) {
         var deckTopCard = deck.getDiscard().getLast();
         // TODO: Ethan has drawn a null and finished turn -> NullPointerException
@@ -76,5 +80,9 @@ public class Game {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void addPlayer(String name) {
+        this.players.add(new Player(name, deck));
     }
 }
