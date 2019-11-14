@@ -11,6 +11,7 @@ import java.util.List;
 public class Game {
     private Deck deck;
     private List<iPlayer> players;
+    private int turnDirection = 1;
 
     public static void main(String[] args) {
         var context = new AnnotationConfigApplicationContext(SpringContext.class);
@@ -36,7 +37,7 @@ public class Game {
 
     public void startGame() {
         int turns = 0;
-        int i = 0;
+        int currentPlayer = 0;
         while (true) {
 
             // Skip
@@ -44,13 +45,25 @@ public class Game {
                 continue;
             }
 
+            var i = turnEngine(currentPlayer);
+            System.out.println("turnEngine(currentPlayer) = " + i);
             players.get(i).takeTurn(this);
+            // if player played
+            // check card rules in turn engine
+
+            var cardPlayed = deck.getDiscard().getLast();
+
+
             turns++;
-            i = turnEngine(i);
+
             if (players.get(i).getHand().size() <= 0) {
-                System.out.println("\n" + players.get(i).getName() + " has won the game! It lasted " + turns + " turns.");
+                System.out.println("\n" + players.get(i).getName() + " has won the game! It lasted " + turns + " " +
+                        "turns.");
                 return;
             }
+            checkTurnDirection(cardPlayed);
+            currentPlayer = currentPlayer + turnDirection;
+            System.out.println("currentPlayer + turnDirection = " + currentPlayer);
         }
     }
 
@@ -83,17 +96,36 @@ public class Game {
         }
     }
 
-    public int turnEngine(int i) {
-        if (i == players.size()-1) i = 0;
-        else i++;
-        return i;
+    public int turnEngine(int currentPlayer) {
+//        if (currentPlayer == players.size()-1) currentPlayer = 0;
+//        else currentPlayer++;
+
+        if(currentPlayer<=0) currentPlayer = currentPlayer + players.size();
+        currentPlayer = currentPlayer % (players.size());
+
+        // -3 % 3 = 0
+        // -2 % 3 = -2
+        // -1 % 3 = -1
+        // 0 % 3 = 0
+        // 1 % 3 = 1
+        // 2 % 3 = 2
+        // 3 % 3 = 0
+
+        //do this after every turn
+        //turn direction will go back and forth
+        return currentPlayer;
+
     }
 
-    public int turnDirection(int index) {
-        throw new RuntimeException();
+    public void checkTurnDirection(Card card) {
+        if (card.getFace() == Face.Reverse) {
+            System.out.println("Turn direction REVERSED >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            turnDirection = -1;
+        } else turnDirection = 1;
     }
 
     public int convertNegativeIndex(int index) {
+        // add to modulo
         throw new RuntimeException();
     }
 
