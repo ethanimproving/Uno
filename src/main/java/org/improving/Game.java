@@ -39,30 +39,17 @@ public class Game {
         int i = 0;
         while (true) {
 
-            // while true
-            // player i take turn
-            // increment i according to turn engine
-            // if player i has won, return
+            // Skip
+            if(1==2){
+                continue;
+            }
 
-            for (var player : players) {
-
-
-
-
-                //Skip
-                if(1==2){
-                    continue;
-                }
-
-                // Take turn.
-                player.takeTurn(this);
-                turns++;
-
-                // Check if player has won.
-                if (player.getHand().size() <= 0) {
-                    System.out.println("\n" + player.getName() + " has won the game! It lasted " + turns + " turns.");
-                    return;
-                }
+            players.get(i).takeTurn(this);
+            turns++;
+            i = turnEngine(i);
+            if (players.get(i).getHand().size() <= 0) {
+                System.out.println("\n" + players.get(i).getName() + " has won the game! It lasted " + turns + " turns.");
+                return;
             }
         }
     }
@@ -96,8 +83,10 @@ public class Game {
         }
     }
 
-    public int turnEngine() {
-        throw new RuntimeException();
+    public int turnEngine(int i) {
+        if (i == players.size()-1) i = 0;
+        else i++;
+        return i;
     }
 
     public int turnDirection(int index) {
