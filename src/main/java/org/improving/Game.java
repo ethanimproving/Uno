@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class Game {
     private Deck deck;
-    private List<Player> players;
+    private List<iPlayer> players;
 
     public static void main(String[] args) {
         var context = new AnnotationConfigApplicationContext(SpringContext.class);
@@ -19,12 +19,13 @@ public class Game {
         System.out.println("Count: " + game.getDeckPile());
     }
 
-    public Game(Deck deck) {
-        this.deck = deck;
+    public Game() {
+        this.deck = new Deck();
         this.players = new ArrayList<>();
         this.players.addAll(Arrays.asList(
                 new Player("David O\'Hera", this.deck),
-                new Player("Tim Rayburn", this.deck)
+                new Player("Tim Rayburn", this.deck),
+                new Player("Ethan Miller", this.deck)
         ));
         initializeDiscardPile();
     }
@@ -35,11 +36,26 @@ public class Game {
 
     public void startGame() {
         int turns = 0;
+        int i = 0;
         while (true) {
+
+            // while true
+            // player i take turn
+            // increment i according to turn engine
+            // if player i has won, return
+
             for (var player : players) {
 
+
+
+
+                //Skip
+                if(1==2){
+                    continue;
+                }
+
                 // Take turn.
-                player.takeTurn(deck);
+                player.takeTurn(this);
                 turns++;
 
                 // Check if player has won.
@@ -66,17 +82,13 @@ public class Game {
     public static boolean isPlayable(Deck deck, Card card) {
         var deckTopCard = deck.getDiscard().getLast();
         // TODO: Ethan has drawn a null and finished turn -> NullPointerException
-        if (deckTopCard.getFace() == Face.Draw2) {
-            if (card.getFace() == Face.Draw2) return true;
-            return false;
-        }
 
         return deckTopCard.getColor() == card.getColor() ||
                 deckTopCard.getFace() == card.getFace() ||
                 card.getFace().getValue() == 50;
     }
 
-    public void cardBehavior(Player player, Card card) {
+    public void cardRules(Player player, Card card) {
         if (card.getFace() == Face.Draw2) {
             player.getHand().add(this.deck.draw());
             player.getHand().add(this.deck.draw());
@@ -84,7 +96,19 @@ public class Game {
         }
     }
 
-    public List<Player> getPlayers() {
+    public int turnEngine() {
+        throw new RuntimeException();
+    }
+
+    public int turnDirection(int index) {
+        throw new RuntimeException();
+    }
+
+    public int convertNegativeIndex(int index) {
+        throw new RuntimeException();
+    }
+
+    public List<iPlayer> getPlayers() {
         return players;
     }
 

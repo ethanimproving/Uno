@@ -18,13 +18,13 @@ class GameTest {
     void init() {
         // Arrange
         deck = new Deck();
-        game = new Game(deck);
+        game = new Game();
         game.getPlayers().clear();
         game.addPlayer("Ethan");
         game.addPlayer("Jennifer");
 
-        player = game.getPlayers().get(0);
-        player2 = game.getPlayers().get(1);
+        player = (Player) game.getPlayers().get(0);
+        player2 = (Player) game.getPlayers().get(1);
         player.getHand().clear();
         player2.getHand().clear();
         deck.getDiscard().clear();
@@ -116,7 +116,7 @@ class GameTest {
     }
 
     @Test
-    void isPlayable_should_return_false_when_draw_2() {
+    void isPlayable_should_return_false_when_discard_is_draw_2() {
         // Arrange
         game.getDiscard().add(new Card(Color.Yellow, Face.Draw2));
         var card = new Card(Color.Yellow, Face.Eight);
@@ -133,6 +133,58 @@ class GameTest {
         // Arrange
         game.getDiscard().add(new Card(Color.Yellow, Face.Draw2));
         var card = new Card(Color.Yellow, Face.Draw2);
+
+        // Act
+        var result = game.isPlayable(game.getDeck(), card);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void isPlayable_should_return_false_when_draw_4() {
+        // Arrange
+        game.getDiscard().add(new Card(Color.Yellow, Face.WildDrawFour));
+        var card = new Card(Color.Yellow, Face.Eight);
+
+        // Act
+        var result = game.isPlayable(game.getDeck(), card);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    void isPlayable_should_return_true_when_two_draw_4s() {
+        // Arrange
+        game.getDiscard().add(new Card(Color.Yellow, Face.WildDrawFour));
+        var card = new Card(Color.Yellow, Face.WildDrawFour);
+
+        // Act
+        var result = game.isPlayable(game.getDeck(), card);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void isPlayable_should_return_false_when_reverse() {
+        // Arrange
+        game.getDiscard().add(new Card(Color.Yellow, Face.Reverse));
+        var card = new Card(Color.Yellow, Face.Eight);
+
+        // Act
+        var result = game.isPlayable(game.getDeck(), card);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    void isPlayable_should_return_true_when_two_reverses() {
+        // Arrange
+        game.getDiscard().add(new Card(Color.Yellow, Face.Reverse));
+        var card = new Card(Color.Yellow, Face.Reverse);
 
         // Act
         var result = game.isPlayable(game.getDeck(), card);

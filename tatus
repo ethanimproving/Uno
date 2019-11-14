@@ -1,0 +1,77 @@
+[33mcommit eec8ae922bff0771350fd0a5210cc4ad5ffedd39[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Wed Nov 13 16:14:58 2019 -0600
+
+    player cannot play if last card played was draw 2
+
+[33mcommit 4f214874ca5b054ecef67b1b12793ef3f77d07a8[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Wed Nov 13 13:59:52 2019 -0600
+
+    add unit tests for start game
+
+[33mcommit 5fc8454a0ff4b8f4d7440ef90f3f9a6f3fdf3ba7[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Wed Nov 13 11:53:48 2019 -0600
+
+    fix remaining players taking turns after winning player has won
+
+[33mcommit 13b919e89c20f66d706d9cca1ade1adb61bd3555[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Wed Nov 13 11:19:39 2019 -0600
+
+    add second player
+
+[33mcommit 6834db4d8e69e89b701362667e0c5073e6384369[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Wed Nov 13 10:37:07 2019 -0600
+
+    add spring context to make Game a singleton
+
+[33mcommit f723cb9657ceb324e100bd416dd7d14f090d70e8[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Wed Nov 13 10:06:14 2019 -0600
+
+    move isplayable to game class
+
+[33mcommit b1572af269b14f9c72290cb9729a371a69243127[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Tue Nov 12 16:47:38 2019 -0600
+
+    choose a color for wild cards
+
+[33mcommit 8484f902451986fe3e9a013e318b582be0c111e4[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Tue Nov 12 16:27:59 2019 -0600
+
+    replenish deck when out of cards
+
+[33mcommit c0d5d32f7df17ab95b0cf1d36a4ae30ff7223bfb[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Tue Nov 12 15:37:15 2019 -0600
+
+    add player loop
+
+[33mcommit 73751be267d79c411e1839401acacd98cb54cad5[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Tue Nov 12 12:22:23 2019 -0600
+
+    fix player tests
+
+[33mcommit 6c1d5e9128dcfc415110ecb89a52719b151e4be6[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Tue Nov 12 10:11:08 2019 -0600
+
+    move hand into player and change links to linked lists
+
+[33mcommit 34bd9619f0b89fcd32813ccac69c86a10efdc731[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Mon Nov 11 10:37:29 2019 -0600
+
+    write is playable tests and method
+
+[33mcommit 052098d25e2363198d541d44f67182c50f6ee7ea[m
+Author: Ethan Miller <Ethan.Miller@improving.com>
+Date:   Fri Nov 8 14:38:45 2019 -0600
+
+    initial commit

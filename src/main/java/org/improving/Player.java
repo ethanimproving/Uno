@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class Player {
+public class Player implements iPlayer {
     private String name;
     private LinkedList<Card> hand;
 
@@ -33,22 +33,23 @@ public class Player {
         return card;
     }
 
-    public void takeTurn(Deck deck) {
-        if (deck.getDiscard().getLast().getFace() == Face.Draw2) {
+    @Override
+    public void takeTurn(Game game) {
+        if (game.getDeck().getDiscard().getLast().getFace() == Face.Draw2) {
 
         }
         for (var card : hand) {
-            if (Game.isPlayable(deck, card)) {
+            if (Game.isPlayable(game.getDeck(), card)) {
                 if (card.getColor() == null) chooseWildColor(card);
 
                 hand.remove(card);
-                deck.getDiscard().add(card);
+                game.getDeck().getDiscard().add(card);
                 System.out.println(name + " has played " + card + " and finished turn.");
                 if (card.getFace() == Face.Draw2) { }
                 return;
             }
         }
-        var card = deck.draw();
+        var card = game.getDeck().draw();
         hand.add(card);
         System.out.println(name + " has drawn a " + card + " and finished turn.");
     }
@@ -59,11 +60,22 @@ public class Player {
         card.setColor(Color.values()[random]);
     }
 
+    @Override
     public LinkedList<Card> getHand() {
         return hand;
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int handSize() {
+        return 0;
+    }
+
+    @Override
+    public Card draw() {
+        return null;
     }
 }

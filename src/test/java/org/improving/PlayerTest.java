@@ -12,12 +12,13 @@ class PlayerTest {
     Deck deck;
     Player player;
     List<Card> hand;
+    Game game;
 
     @BeforeEach
     void init() {
         // Arrange
-        deck = new Deck();
-        player = new Player(deck);
+        game = new Game();
+        player = new Player(game.getDeck());
         hand = player.getHand();
         hand.clear();
         deck.getDiscard().clear();
@@ -76,7 +77,7 @@ class PlayerTest {
                 new Card(Color.Red, Face.Five)
         ));
         //Act
-        player.takeTurn(deck);
+        player.takeTurn(game);
         var result = player.getHand().size();
 
         //Assert
@@ -91,7 +92,7 @@ class PlayerTest {
         ));
 
         //Act
-        player.takeTurn(deck);
+        player.takeTurn(game);
         var result = deck.getDiscard().size();
 
         //Assert
@@ -112,7 +113,7 @@ class PlayerTest {
                 new Card(Color.Green, Face.One)
         ));
         //Act
-        player.takeTurn(deck);
+        player.takeTurn(game);
         var result = deck.getDiscard().size();
 
         //Assert
@@ -130,7 +131,7 @@ class PlayerTest {
 
         ));
         //Act
-        player.takeTurn(deck);
+        player.takeTurn(game);
         var result = hand.size();
 
         //Assert
@@ -147,7 +148,7 @@ class PlayerTest {
         ));
 
         //Act
-        player.takeTurn(deck);
+        player.takeTurn(game);
         var result = deck.getDeck().getLast().getColor() != null;
 
         //Assert
@@ -167,7 +168,7 @@ class PlayerTest {
         ));
 
         //Act
-        player.takeTurn(deck);
+        player.takeTurn(game);
         var result = deck.getDeck().getLast().getColor() != null;
 
         //Assert
