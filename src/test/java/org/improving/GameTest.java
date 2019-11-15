@@ -118,7 +118,7 @@ class GameTest {
     @Test
     void isPlayable_should_return_false_when_discard_is_draw_2() {
         // Arrange
-        game.getDiscard().add(new Card(Color.Yellow, Face.Draw2));
+        game.getDiscard().add(new Card(Color.Yellow, Face.DrawTwo));
         var card = new Card(Color.Yellow, Face.Eight);
 
         // Act
@@ -131,8 +131,8 @@ class GameTest {
     @Test
     void isPlayable_should_return_true_when_two_draw_2s() {
         // Arrange
-        game.getDiscard().add(new Card(Color.Yellow, Face.Draw2));
-        var card = new Card(Color.Yellow, Face.Draw2);
+        game.getDiscard().add(new Card(Color.Yellow, Face.DrawTwo));
+        var card = new Card(Color.Yellow, Face.DrawTwo);
 
         // Act
         var result = game.isPlayable(game.getDeck(), card);

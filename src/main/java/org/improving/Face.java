@@ -11,7 +11,7 @@ public enum Face {
     Seven(7),
     Eight(8),
     Nine(9),
-    Draw2(20),
+    DrawTwo(20),
     Reverse(20),
     Skip(20),
     Wild(50),

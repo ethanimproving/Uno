@@ -34,8 +34,8 @@ public class Player implements iPlayer {
     }
 
     @Override
-    public void takeTurn(Game game) {
-        if (game.getDeck().getDiscard().getLast().getFace() == Face.Draw2) {
+    public Card takeTurn(Game game) {
+        if (game.getDeck().getDiscard().getLast().getFace() == Face.DrawTwo) {
 
         }
         for (var card : hand) {
@@ -45,13 +45,14 @@ public class Player implements iPlayer {
                 hand.remove(card);
                 game.getDeck().getDiscard().add(card);
                 System.out.println(name + " has played " + card + " and finished turn.");
-                if (card.getFace() == Face.Draw2) { }
-                return;
+                if (card.getFace() == Face.DrawTwo) { }
+                return card;
             }
         }
         var card = game.getDeck().draw();
         hand.add(card);
         System.out.println(name + " has drawn a " + card + " and finished turn.");
+        return null;
     }
 
     private void chooseWildColor(Card card) {
@@ -75,7 +76,7 @@ public class Player implements iPlayer {
     }
 
     @Override
-    public Card draw() {
-        return null;
+    public Card draw(Game game) {
+        return game.getDeck().draw();
     }
 }
