@@ -9,7 +9,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    Deck deck;
     Player player;
     List<Card> hand;
     Game game;
@@ -21,7 +20,7 @@ class PlayerTest {
         player = new Player(game.getDeck());
         hand = player.getHand();
         hand.clear();
-        deck.getDiscard().clear();
+        game.getDeck().getDiscard().clear();
     }
 
     @Test
@@ -35,7 +34,11 @@ class PlayerTest {
 
     @Test
     void Hand_of_7_cards_should_leave_deck_with_105_cards() {
+        // Arrange
+        var deck = new Deck();
+
         // Act
+        new Player(deck);
         var result = deck.getDeck().size();
 
         // Assert
@@ -56,7 +59,7 @@ class PlayerTest {
         ));
 
         // Act
-        player.play(deck, player.getHand().getLast());
+        player.play(game.getDeck(), player.getHand().getLast());
         var result = player.getHand().size();
 
         // Assert
@@ -66,7 +69,7 @@ class PlayerTest {
     @Test
     void takeTurn_Should_Remove_One_Card_From_Hand() {
         //Arrange
-        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
         player.getHand().addAll(Arrays.asList(
                 new Card(Color.Blue, Face.Five),
                 new Card(Color.Red, Face.Five),
@@ -86,14 +89,14 @@ class PlayerTest {
     @Test
     void takeTurn_Should_Add_One_Card_To_DiscardPile() {
         //Arrange
-        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
         player.getHand().addAll(Arrays.asList(
                 new Card(Color.Blue, Face.Five)
         ));
 
         //Act
         player.takeTurn(game);
-        var result = deck.getDiscard().size();
+        var result = game.getDeck().getDiscard().size();
 
         //Assert
         assertEquals(2, result);
@@ -101,7 +104,7 @@ class PlayerTest {
     @Test
     void takeTurn_Should_Play_First_Playable_Card() {
         //Arrange
-        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
         hand.clear();
         hand.addAll(Arrays.asList(
                 new Card(Color.Red, Face.Seven),
@@ -114,7 +117,7 @@ class PlayerTest {
         ));
         //Act
         player.takeTurn(game);
-        var result = deck.getDiscard().size();
+        var result = game.getDeck().getDiscard().size();
 
         //Assert
         assertEquals(2, result);
@@ -123,7 +126,7 @@ class PlayerTest {
     @Test
     void takeTurn_Should_Draw_Card_If_Not_Playable() {
         //Arrange
-        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
         hand.clear();
         hand.addAll(Arrays.asList(
                 new Card(Color.Red, Face.Seven),
@@ -141,7 +144,7 @@ class PlayerTest {
     @Test
     void takeTurn_Should_Choose_A_Color_For_Wild_Card() {
         //Arrange
-        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
         hand.clear();
         hand.addAll(Arrays.asList(
                 new Card(null, Face.Wild)
@@ -149,7 +152,7 @@ class PlayerTest {
 
         //Act
         player.takeTurn(game);
-        var result = deck.getDeck().getLast().getColor() != null;
+        var result = game.getDeck().getDeck().getLast().getColor() != null;
 
         //Assert
         assertTrue(result);
@@ -161,7 +164,7 @@ class PlayerTest {
         // Recognize at start of turn, because if player has a draw 2, they can avoid drawing two, and if they don't,
         // their turn ends.
         //Arrange
-        deck.getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
         hand.clear();
         hand.addAll(Arrays.asList(
                 new Card(null, Face.Wild)
@@ -169,7 +172,7 @@ class PlayerTest {
 
         //Act
         player.takeTurn(game);
-        var result = deck.getDeck().getLast().getColor() != null;
+        var result = game.getDeck().getDeck().getLast().getColor() != null;
 
         //Assert
         assertTrue(result);
