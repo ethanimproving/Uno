@@ -37,33 +37,27 @@ public class Game {
 
     public void startGame() {
         int turns = 0;
-        int currentPlayer = 0;
+        int turnIndex = 0;
+        int currentPlayer;
         while (true) {
 
-            // Skip
-            if(1==2){
-                continue;
-            }
-
-            var i = turnEngine(currentPlayer);
-            System.out.println("turnEngine(currentPlayer) = " + i);
-            players.get(i).takeTurn(this);
+            currentPlayer = turnEngine(turnIndex);
+            System.out.println("\nCurrent Player (" + turnIndex + " % " + players.size() + ") = " + currentPlayer);
+            players.get(currentPlayer).takeTurn(this);
             // if player played
             // check card rules in turn engine
 
             var cardPlayed = deck.getDiscard().getLast();
-
-
             turns++;
 
-            if (players.get(i).getHand().size() <= 0) {
-                System.out.println("\n" + players.get(i).getName() + " has won the game! It lasted " + turns + " " +
+            if (players.get(currentPlayer).getHand().size() <= 0) {
+                System.out.println("\n" + players.get(currentPlayer).getName() + " has won the game! It lasted " + turns + " " +
                         "turns.");
                 return;
             }
             checkTurnDirection(cardPlayed);
-            currentPlayer = currentPlayer + turnDirection;
-            System.out.println("currentPlayer + turnDirection = " + currentPlayer);
+            turnIndex = turnIndex + turnDirection;
+            System.out.println("Turn Index = " + turnIndex);
         }
     }
 
@@ -97,8 +91,6 @@ public class Game {
     }
 
     public int turnEngine(int currentPlayer) {
-//        if (currentPlayer == players.size()-1) currentPlayer = 0;
-//        else currentPlayer++;
 
         if(currentPlayer<=0) currentPlayer = currentPlayer + players.size();
         currentPlayer = currentPlayer % (players.size());
@@ -127,6 +119,15 @@ public class Game {
     public int convertNegativeIndex(int index) {
         // add to modulo
         throw new RuntimeException();
+    }
+
+    public boolean isSpecialCard(Card card) {
+        return card.getFace().getValue() == 20 ||
+                card.getFace().equals(Face.WildDrawFour);
+    }
+
+    public void excuteSpecialCard() {
+
     }
 
     public List<iPlayer> getPlayers() {
