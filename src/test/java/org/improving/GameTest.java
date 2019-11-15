@@ -115,4 +115,61 @@ class GameTest {
         assertTrue(result);
     }
 
+    @Test
+    void turnEngine_should_convert_turn_index_into_player_index() {
+        // Arrange
+        var turnIndex = 2;
+
+        // Act
+        var result = game.turnEngine(turnIndex);
+
+        // Assert
+        assertEquals(0, result);
+        assertEquals(0, game.turnEngine(18));
+    }
+
+    @Test
+    void turnEngine_should_convert_negative_turn_index_into_player_index() {
+        // Arrange
+        var turnIndex = -1;
+
+        // Act
+        var result = game.turnEngine(turnIndex);
+
+        // Assert
+        assertEquals(1, result);
+    }
+
+    @Test
+    void turnEngine_should_return_absolute_value_of_conversion() {
+        // Arrange
+        var newGame = new Game();
+        newGame.getDeckPile().clear();
+        for (var player : newGame.getPlayers()) player.getHand().clear();
+        newGame.getDiscard().add(new Card(Color.Blue, Face.Five));
+        newGame.getPlayers().get(0).getHand().addAll(Arrays.asList(
+                new Card(Color.Blue, Face.Reverse)
+        ));
+
+        for (var player : newGame.getPlayers()) {
+            player.getHand().addAll(Arrays.asList(
+                    new Card(Color.Blue, Face.Five),
+                    new Card(Color.Blue, Face.Six),
+                    new Card(Color.Blue, Face.Seven)
+            ));
+        }
+
+
+        // Act
+        newGame.startGame();
+
+        // Assert: if no exception is raised, test passes.
+        assertTrue(true);
+    }
+
+    @Test
+    void executeSpecialCard_should_make_next_player_draw_four_when_current_player_plays_draw_four() {
+
+    }
+
 }

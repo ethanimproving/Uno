@@ -3,10 +3,7 @@ package org.improving;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class Game {
@@ -77,12 +74,12 @@ public class Game {
 
     public int turnEngine(int turnIndex) {
 
-        if(turnIndex<=0) this.turnIndex = turnIndex + players.size();
-        turnIndex = turnIndex % (players.size());
+        var playerIndex = turnIndex % (players.size());
 
-        return turnIndex;
+        return Math.abs(playerIndex);
 
     }
+
 
     public void excuteSpecialCard(Card card) {
         int nextTurnIndex = turnIndex + turnDirection;
@@ -122,7 +119,7 @@ public class Game {
         return deck;
     }
 
-    public List<Card> getDiscard() {
+    public LinkedList<Card> getDiscard() {
         return deck.getDiscard();
     }
 

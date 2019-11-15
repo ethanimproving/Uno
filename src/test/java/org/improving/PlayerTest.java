@@ -177,4 +177,20 @@ class PlayerTest {
         //Assert
         assertTrue(result);
     }
+
+    @Test
+    void chooseColor_should_return_a_color() {
+        // Arrange
+        var newGame = new Game();
+
+        newGame.getPlayers().get(0).getHand().clear();
+        newGame.getPlayers().get(0).getHand().add(new Card(null, Face.Wild));
+
+        // Act
+        newGame.getPlayers().get(0).takeTurn(newGame);
+        var result = newGame.getDiscard().getLast().getColor().getClass();
+
+        // Assert
+        assertEquals(Color.class, result);
+    }
 }
