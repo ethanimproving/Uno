@@ -40,12 +40,8 @@ public class Player implements iPlayer {
         }
         for (var card : hand) {
             if (Game.isPlayable(game.getDeck(), card)) {
-                if (card.getColor() == null) chooseWildColor(card);
-
-                hand.remove(card);
-                game.getDeck().getDiscard().add(card);
+                playCard(game, card);
                 System.out.println(name + " has played " + card + " and finished turn.");
-                if (card.getFace() == Face.DrawTwo) { }
                 return card;
             }
         }
@@ -55,10 +51,17 @@ public class Player implements iPlayer {
         return null;
     }
 
-    private void chooseWildColor(Card card) {
+    private void playCard(Game game, Card card) {
+        if (card.getColor() == null) game.playCard(card, chooseWildColor());
+        // TODO: make color parameter optional.
+        else game.playCard(card, null);
+        hand.remove(card);
+    }
+
+    private Color chooseWildColor() {
         // TODO: Prompt user to choose color. Hint: Choose different picking strategies for bots.
         var random = new Random().nextInt(4);
-        card.setColor(Color.values()[random]);
+        return Color.values()[random];
     }
 
     @Override

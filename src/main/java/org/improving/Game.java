@@ -14,7 +14,6 @@ public class Game {
     private List<iPlayer> players;
     private int turnDirection = 1;
     private int turnIndex = 0;
-    private int currentPlayer;
 
     public static void main(String[] args) {
         var context = new AnnotationConfigApplicationContext(SpringContext.class);
@@ -40,6 +39,8 @@ public class Game {
 
     public void startGame() {
         int turns = 0;
+        int currentPlayer;
+
         while (true) {
 
             currentPlayer = turnEngine(turnIndex);
@@ -108,10 +109,9 @@ public class Game {
         }
     }
 
-    public Card playCard(Card card, Optional<Color> color) {
-
+    public void playCard(Card card, Color color) {
+        if (card.getColor() == null) card.setColor(color);
         deck.getDiscard().add(card);
-        return card;
     }
 
     public List<Card> getDeckPile() {
