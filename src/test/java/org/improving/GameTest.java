@@ -9,33 +9,46 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
-    Deck deck;
-    Player player;
-    Player player2;
     Game game;
 
     @BeforeEach
     void init() {
         // Arrange
-        deck = new Deck();
         game = new Game();
         game.getPlayers().clear();
         game.addPlayer("Ethan");
         game.addPlayer("Jennifer");
-
-        player = (Player) game.getPlayers().get(0);
-        player2 = (Player) game.getPlayers().get(1);
-        player.getHand().clear();
-        player2.getHand().clear();
-        deck.getDiscard().clear();
+        for (var player : game.getPlayers()) player.getHand().clear();
     }
 
     @Test
-    void initializeDiscardPile() {
+    void play_should_call_initializeDiscardPile_which_should_add_one_card_to_discard_pile() {
+        // Arrange
+        game.getPlayers().get(0).getHand().add(new Card(Color.Yellow, Face.Five));
+        game.getDeckPile().add(new Card(Color.Yellow, Face.Five));
+        game.getDiscard().add(new Card(Color.Yellow, Face.Five));
+
+        // Act
+        game.playGame();
+        var result = game.getDiscard().size();
+
+        // Assert
+        assertEquals(3, result);
     }
 
     @Test
-    void startGame_should_have_declare_first_player_to_run_out_of_cards_as_winner() {
+    void initializeDiscardPile_should_execute_action_card_on_player_one() {
+        // Act
+        game.getDeckPile().add(new Card(Color.Blue, Face.WildDrawFour));
+        game.initializeDiscardPile();
+        var result = game.getPlayers().get(0).getHand().size();
+
+        // Assert
+        assertEquals(4, result);
+    }
+
+    @Test
+    void playGame_should_declare_first_player_to_run_out_of_cards_as_winner() {
         // Arrange
         game.getDiscard().add(new Card(Color.Blue, Face.Five));
         game.getDeckPile().addAll(Arrays.asList(
@@ -53,7 +66,7 @@ class GameTest {
         ));
 
         // Act
-        game.startGame();
+        game.playGame();
         var result = game.getPlayers().get(1).getHand().size();
         var ethanscards = game.getPlayers().get(0).getHand().size();
 
@@ -66,11 +79,11 @@ class GameTest {
     @Test
     void isPlayable_should_return_true_when_player_hand_topcard_color_is_equal_to_deck_discard_topcard() {
         // Arrange
-        player.getHand().add(new Card(Color.Red, Face.Nine));
-        deck.getDiscard().add(new Card(Color.Red, Face.Five));
+        game.getPlayers().get(0).getHand().add(new Card(Color.Red, Face.Nine));
+        game.getDiscard().add(new Card(Color.Red, Face.Five));
 
         // Act
-        var result = game.isPlayable(player.getHand().getLast());
+        var result = game.isPlayable(game.getPlayers().get(0).getHand().getLast());
 
         // Assert
         assertTrue(result);
@@ -79,11 +92,11 @@ class GameTest {
     @Test
     void isPlayable_should_return_true_when_player_hand_topcard_face_is_equal_to_deck_discard_topcard() {
         // Arrange
-        player.getHand().add(new Card(Color.Blue, Face.Five));
-        deck.getDiscard().add(new Card(Color.Red, Face.Five));
+        game.getPlayers().get(0).getHand().add(new Card(Color.Blue, Face.Five));
+        game.getDiscard().add(new Card(Color.Red, Face.Five));
 
         // Act
-        var result = game.isPlayable(player.getHand().getLast());
+        var result = game.isPlayable(game.getPlayers().get(0).getHand().getLast());
 
         // Assert
         assertTrue(result);
@@ -92,11 +105,11 @@ class GameTest {
     @Test
     void isPlayable_should_return_false_when_neither_faces_nor_colors_match() {
         // Arrange
-        player.getHand().add(new Card(Color.Blue, Face.Six));
-        deck.getDiscard().add(new Card(Color.Red, Face.Five));
+        game.getPlayers().get(0).getHand().add(new Card(Color.Blue, Face.Six));
+        game.getDiscard().add(new Card(Color.Red, Face.Five));
 
         // Act
-        var result = game.isPlayable(player.getHand().getLast());
+        var result = game.isPlayable(game.getPlayers().get(0).getHand().getLast());
 
         // Assert
         assertFalse(result);
@@ -105,11 +118,11 @@ class GameTest {
     @Test
     void isPlayable_should_return_true_when_wild_card() {
         // Arrange
-        player.getHand().add(new Card(null, Face.Wild));
-        deck.getDiscard().add(new Card(Color.Red, Face.Five));
+        game.getPlayers().get(0).getHand().add(new Card(null, Face.Wild));
+        game.getDiscard().add(new Card(Color.Red, Face.Five));
 
         // Act
-        var result = game.isPlayable(player.getHand().getLast());
+        var result = game.isPlayable(game.getPlayers().get(0).getHand().getLast());
 
         // Assert
         assertTrue(result);
@@ -158,9 +171,10 @@ class GameTest {
                     new Card(Color.Blue, Face.Seven)
             ));
         }
+        newGame.getDeckPile().add(new Card(Color.Blue, Face.Seven));
 
         // Act
-        newGame.startGame();
+        newGame.playGame();
 
         // Assert: if no exception is raised, test passes.
         assertTrue(true);
@@ -176,7 +190,7 @@ class GameTest {
         ));
 
         // Act
-        game.excuteSpecialCard(new Card(Color.Blue, Face.WildDrawFour));
+        game.executeSpecialCard(new Card(Color.Blue, Face.WildDrawFour));
         var result = game.getPlayers().get(1).getHand().size();
 
         // Assert

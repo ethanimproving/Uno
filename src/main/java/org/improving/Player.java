@@ -48,21 +48,21 @@ public class Player implements iPlayer {
     }
 
     @Override
-    public LinkedList<Card> getHand() {
-        return hand;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
     public int handSize() {
         return hand.size();
     }
 
     @Override
     public Card draw(Game game) {
-        return game.getDeck().draw();
+        return game.draw();
+    }
+
+    @Override
+    public LinkedList<Card> getHand() {
+        return hand;
+    }
+
+    public String getName() {
+        return name;
     }
 }

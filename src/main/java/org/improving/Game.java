@@ -15,7 +15,7 @@ public class Game {
     public static void main(String[] args) {
         var context = new AnnotationConfigApplicationContext(SpringContext.class);
         var game = context.getBean(Game.class);
-        game.startGame();
+        game.playGame();
     }
 
     public Game() {
@@ -26,25 +26,27 @@ public class Game {
                 new Player("Tim Rayburn", this.deck),
                 new Player("Ethan Miller", this.deck)
         ));
-        initializeDiscardPile();
     }
 
     public void initializeDiscardPile() {
         deck.getDiscard().add(deck.draw());
+        turnIndex--;
+        executeSpecialCard(deck.getDiscard().getLast());
+        turnIndex++;
     }
 
-    public void startGame() {
+    public void playGame() {
         int turns = 0;
         int currentPlayer;
+        initializeDiscardPile();
 
         while (true) {
-
             // Determine current player.
             currentPlayer = turnEngine(turnIndex);
 
             // Take turn and if card was played, check card behavior.
             var cardPlayed = players.get(currentPlayer).takeTurn(this);
-            if (cardPlayed != null) excuteSpecialCard(cardPlayed);
+            if (cardPlayed != null) executeSpecialCard(cardPlayed);
 
             // Increment turn count to keep track of turns played.
             turns++;
@@ -68,22 +70,17 @@ public class Game {
         turnIndex = turnIndex + turnDirection;
     }
 
+    public int turnEngine(int turnIndex) {
+        return Math.abs(turnIndex % players.size());
+    }
+
     public boolean isPlayable(Card card) {
         return deck.getDiscard().getLast().getColor().equals(card.getColor()) ||
                 deck.getDiscard().getLast().getFace().equals(card.getFace()) ||
                 card.getFace().getValue() == 50;
     }
 
-    public int turnEngine(int turnIndex) {
-
-        var playerIndex = turnIndex % (players.size());
-
-        return Math.abs(playerIndex);
-
-    }
-
-
-    public void excuteSpecialCard(Card card) {
+    public void executeSpecialCard(Card card) {
         int nextTurnIndex = turnIndex + turnDirection;
         int nextPlayer = turnEngine(nextTurnIndex);
 
