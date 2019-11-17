@@ -68,7 +68,7 @@ public class Game {
         turnIndex = turnIndex + turnDirection;
     }
 
-    public static boolean isPlayable(Deck deck, Card card) {
+    public boolean isPlayable(Card card) {
         return deck.getDiscard().getLast().getColor().equals(card.getColor()) ||
                 deck.getDiscard().getLast().getFace().equals(card.getFace()) ||
                 card.getFace().getValue() == 50;

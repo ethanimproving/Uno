@@ -70,7 +70,7 @@ class GameTest {
         deck.getDiscard().add(new Card(Color.Red, Face.Five));
 
         // Act
-        var result = Game.isPlayable(deck, player.getHand().get(0));
+        var result = game.isPlayable(player.getHand().getLast());
 
         // Assert
         assertTrue(result);
@@ -83,7 +83,7 @@ class GameTest {
         deck.getDiscard().add(new Card(Color.Red, Face.Five));
 
         // Act
-        var result = Game.isPlayable(deck, player.getHand().get(0));
+        var result = game.isPlayable(player.getHand().getLast());
 
         // Assert
         assertTrue(result);
@@ -96,7 +96,7 @@ class GameTest {
         deck.getDiscard().add(new Card(Color.Red, Face.Five));
 
         // Act
-        var result = Game.isPlayable(deck, player.getHand().get(0));
+        var result = game.isPlayable(player.getHand().getLast());
 
         // Assert
         assertFalse(result);
@@ -109,7 +109,7 @@ class GameTest {
         deck.getDiscard().add(new Card(Color.Red, Face.Five));
 
         // Act
-        var result = Game.isPlayable(deck, player.getHand().get(0));
+        var result = game.isPlayable(player.getHand().getLast());
 
         // Assert
         assertTrue(result);
@@ -158,7 +158,6 @@ class GameTest {
                     new Card(Color.Blue, Face.Seven)
             ));
         }
-
 
         // Act
         newGame.startGame();

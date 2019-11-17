@@ -17,7 +17,7 @@ class PlayerTest {
     void init() {
         // Arrange
         game = new Game();
-        player = new Player(game.getDeck());
+        player = new Player("Ethan", game.getDeck());
         hand = player.getHand();
         hand.clear();
         game.getDeck().getDiscard().clear();
@@ -26,7 +26,7 @@ class PlayerTest {
     @Test
     void initializeHand_should_contain_x_cards() {
         // Act
-        var result = new Player(new Deck()).getHand().size();
+        var result = new Player("Ethan", new Deck()).getHand().size();
 
         // Assert
         assertEquals(7, result);
@@ -38,7 +38,7 @@ class PlayerTest {
         var deck = new Deck();
 
         // Act
-        new Player(deck);
+        new Player("Ethan", deck);
         var result = deck.getDeck().size();
 
         // Assert
@@ -46,7 +46,7 @@ class PlayerTest {
     }
 
     @Test
-    void play_should_remove_a_card_from_hand() {
+    void playCard_should_remove_a_card_from_hand() {
         // Arrange
         player.getHand().addAll(Arrays.asList(
                 new Card(Color.Red, Face.Five),
@@ -57,9 +57,10 @@ class PlayerTest {
                 new Card(Color.Red, Face.Five),
                 new Card(Color.Red, Face.Five)
         ));
+        game.getDiscard().add(new Card(Color.Blue, Face.Five));
 
         // Act
-        player.play(game.getDeck(), player.getHand().getLast());
+        player.takeTurn(game);
         var result = player.getHand().size();
 
         // Assert
@@ -143,26 +144,6 @@ class PlayerTest {
 
     @Test
     void takeTurn_Should_Choose_A_Color_For_Wild_Card() {
-        //Arrange
-        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
-        hand.clear();
-        hand.addAll(Arrays.asList(
-                new Card(null, Face.Wild)
-        ));
-
-        //Act
-        player.takeTurn(game);
-        var result = game.getDeck().getDeck().getLast().getColor() != null;
-
-        //Assert
-        assertTrue(result);
-    }
-
-    @Test
-    void takeTurn_Should_Recognize_Discard_Card_And_Make_Player_Draw_Two_If_Card_Is_Draw_Two() {
-        // Take turn should take in a player (the next player up) and make him draw to if card is draw two
-        // Recognize at start of turn, because if player has a draw 2, they can avoid drawing two, and if they don't,
-        // their turn ends.
         //Arrange
         game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
         hand.clear();

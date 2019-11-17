@@ -1,6 +1,5 @@
 package org.improving;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -8,16 +7,9 @@ public class Player implements iPlayer {
     private String name;
     private LinkedList<Card> hand;
 
-    public Player(Deck deck) {
-        this.name = "Player";
-        initializeHand(deck, 7);
-        Collections.shuffle(hand);
-    }
-
     public Player(String name, Deck deck) {
         this.name = name;
         initializeHand(deck, 7);
-        Collections.shuffle(hand);
     }
 
     private void initializeHand (Deck deck, int size) {
@@ -27,19 +19,10 @@ public class Player implements iPlayer {
         }
     }
 
-    public Card play(Deck deck, Card card) {
-        hand.remove(card);
-        deck.getDiscard().add(card);
-        return card;
-    }
-
     @Override
     public Card takeTurn(Game game) {
-        if (game.getDeck().getDiscard().getLast().getFace() == Face.DrawTwo) {
-
-        }
         for (var card : hand) {
-            if (Game.isPlayable(game.getDeck(), card)) {
+            if (game.isPlayable(card)) {
                 playCard(game, card);
                 System.out.println(name + " has played " + card + " and finished turn.");
                 return card;
