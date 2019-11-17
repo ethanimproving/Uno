@@ -75,7 +75,7 @@ public class Player implements iPlayer {
 
     @Override
     public int handSize() {
-        return 0;
+        return hand.size();
     }
 
     @Override

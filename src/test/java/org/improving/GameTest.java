@@ -169,7 +169,19 @@ class GameTest {
 
     @Test
     void executeSpecialCard_should_make_next_player_draw_four_when_current_player_plays_draw_four() {
+        // Arrange
+        game.getDiscard().add(new Card(Color.Blue, Face.Five));
+        game.getPlayers().get(1).getHand().addAll(Arrays.asList(
+                new Card(Color.Blue, Face.Five),
+                new Card(Color.Blue, Face.Five)
+        ));
 
+        // Act
+        game.excuteSpecialCard(new Card(Color.Blue, Face.WildDrawFour));
+        var result = game.getPlayers().get(1).getHand().size();
+
+        // Assert
+        assertEquals(2+4, result);
     }
 
 }

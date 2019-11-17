@@ -62,7 +62,7 @@ class DeckTest {
         var result = deck.getDeck().size();
 
         // Assert
-        assertEquals(6, result);
+        assertEquals(5, result);
 
     }
 
@@ -120,6 +120,28 @@ class DeckTest {
         var result = deck.getDeck().size();
 
         // Assert
-        assertEquals(3, result);
+        assertEquals(2, result);
+    }
+
+    @Test
+    void draw_should_return_card_after_replenishing_deck() {
+        // Arrange
+        deck.getDeck().clear();
+        deck.getDiscard().addAll(Arrays.asList(
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Red, Face.Five),
+                new Card(Color.Blue, Face.Five)
+        ));
+
+        // Act
+        var result = deck.draw().getClass();
+
+        // Assert
+        assertEquals(Card.class, result);
+
     }
 }

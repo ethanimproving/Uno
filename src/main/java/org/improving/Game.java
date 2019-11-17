@@ -16,7 +16,6 @@ public class Game {
         var context = new AnnotationConfigApplicationContext(SpringContext.class);
         var game = context.getBean(Game.class);
         game.startGame();
-        System.out.println("Count: " + game.getDeckPile());
     }
 
     public Game() {
@@ -40,22 +39,28 @@ public class Game {
 
         while (true) {
 
+            // Determine current player.
             currentPlayer = turnEngine(turnIndex);
-            System.out.println("\nCurrent Player (" + turnIndex + " % " + players.size() + ") = " + currentPlayer);
-            // TODO: index -1 out of bounds
 
+            // Take turn and if card was played, check card behavior.
             var cardPlayed = players.get(currentPlayer).takeTurn(this);
             if (cardPlayed != null) excuteSpecialCard(cardPlayed);
 
+            // Increment turn count to keep track of turns played.
             turns++;
 
+            // Check if player has won.
             if (players.get(currentPlayer).getHand().size() <= 0) {
                 System.out.println("\n" + players.get(currentPlayer).getName() + " has won the game! It lasted " + turns + " " +
                         "turns.");
                 return;
             }
+
+            // Move player index to the next player
             incrementTurn();
-            System.out.println("Turn Index = " + turnIndex);
+
+            // Print Player End Turn Information
+            System.out.println("Hand: " + players.get(currentPlayer).getHand().toString() + "\n");
         }
     }
 
@@ -64,11 +69,8 @@ public class Game {
     }
 
     public static boolean isPlayable(Deck deck, Card card) {
-        var deckTopCard = deck.getDiscard().getLast();
-        // TODO: Ethan has drawn a null and finished turn -> NullPointerException
-
-        return deckTopCard.getColor() == card.getColor() ||
-                deckTopCard.getFace() == card.getFace() ||
+        return deck.getDiscard().getLast().getColor().equals(card.getColor()) ||
+                deck.getDiscard().getLast().getFace().equals(card.getFace()) ||
                 card.getFace().getValue() == 50;
     }
 
@@ -86,15 +88,15 @@ public class Game {
         int nextPlayer = turnEngine(nextTurnIndex);
 
         if(card.getFace() == Face.DrawTwo) {
-            players.get(nextPlayer).draw(this);
-            players.get(nextPlayer).draw(this);
+            players.get(nextPlayer).getHand().add(draw());
+            players.get(nextPlayer).getHand().add(draw());
             System.out.println(players.get(nextPlayer).getName() + " has drawn two cards.");
             incrementTurn();
         } else if(card.getFace() == Face.WildDrawFour) {
-            players.get(nextPlayer).draw(this);
-            players.get(nextPlayer).draw(this);
-            players.get(nextPlayer).draw(this);
-            players.get(nextPlayer).draw(this);
+            players.get(nextPlayer).getHand().add(draw());
+            players.get(nextPlayer).getHand().add(draw());
+            players.get(nextPlayer).getHand().add(draw());
+            players.get(nextPlayer).getHand().add(draw());
             System.out.println(players.get(nextPlayer).getName() + " has drawn FOUR cards. Sorry bud!");
             incrementTurn();
         } else if(card.getFace() == Face.Reverse) {
@@ -104,6 +106,10 @@ public class Game {
             System.out.println(players.get(nextPlayer).getName() + " has been SKIPPED.");
             incrementTurn();
         }
+    }
+
+    public Card draw() {
+        return deck.draw();
     }
 
     public void playCard(Card card, Color color) {

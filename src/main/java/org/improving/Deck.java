@@ -33,10 +33,12 @@ public class Deck {
             deck.remove(card);
             return card;
         } catch (NoSuchElementException e) {
-            System.out.println("GAME OVER. The deck has been replenished with cards from the discard pile.");
+            System.out.println("The deck has been replenished with cards from the discard pile.");
             replenishDeck();
+            var card = deck.getLast();
+            deck.remove(card);
+            return card;
         }
-        return null;
     }
 
     private void replenishDeck() {
