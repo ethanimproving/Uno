@@ -77,7 +77,7 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public IPlayer getPrevPlayer() {
+    public IPlayer getPrevPlayer(IGame game) {
         return null;
     }
 
@@ -89,7 +89,9 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public IPlayer getNextNextPlayer() {
-        return null;
+    public IPlayer getNextNextPlayer(IGame game) {
+        int nextTurnIndex = game.getTurnIndex() + game.getTurnDirection() * 2;
+        int nextPlayer = game.turnEngine(nextTurnIndex);
+        return game.getPlayers().get(nextPlayer);
     }
 }

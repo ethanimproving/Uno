@@ -35,5 +35,10 @@ class IPlayerInfoTest {
 
     @Test
     void getNextNextPlayer() {
+        // Act
+        var result = game.getPlayers().get(0).getNextNextPlayer(game);
+
+        // Assert
+        assertEquals(game.getPlayers().get(2), result);
     }
 }
