@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class Game {
+public class Game implements iGame {
     private Deck deck;
     private List<iPlayer> players;
     private int turnDirection = 1;
@@ -30,9 +30,9 @@ public class Game {
 
     public void initializeDiscardPile() {
         deck.getDiscard().add(deck.draw());
-        turnIndex--;
+        turnIndex--; // Decrement turn index to offset nextPlayer in executeSpecialCard to player 1
         executeSpecialCard(deck.getDiscard().getLast());
-        turnIndex++;
+        turnIndex++; // Reset turns back to player 2
     }
 
     public void playGame() {
@@ -74,6 +74,7 @@ public class Game {
         return Math.abs(turnIndex % players.size());
     }
 
+    @Override
     public boolean isPlayable(Card card) {
         return deck.getDiscard().getLast().getColor().equals(card.getColor()) ||
                 deck.getDiscard().getLast().getFace().equals(card.getFace()) ||
@@ -105,10 +106,12 @@ public class Game {
         }
     }
 
+    @Override
     public Card draw() {
         return deck.draw();
     }
 
+    @Override
     public void playCard(Card card, Color color) {
         if (card.getColor() == null) card.setColor(color);
         deck.getDiscard().add(card);

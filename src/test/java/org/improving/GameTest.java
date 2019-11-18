@@ -22,7 +22,7 @@ class GameTest {
     }
 
     @Test
-    void play_should_call_initializeDiscardPile_which_should_add_one_card_to_discard_pile() {
+    void playGame_should_call_initializeDiscardPile_which_should_add_one_card_to_discard_pile() {
         // Arrange
         game.getPlayers().get(0).getHand().add(new Card(Color.Yellow, Face.Five));
         game.getDeckPile().add(new Card(Color.Yellow, Face.Five));

@@ -9,6 +9,5 @@ public interface iPlayer {
     Card takeTurn(Game game);
 
     LinkedList<Card> getHand();
-
     String getName();
 }
