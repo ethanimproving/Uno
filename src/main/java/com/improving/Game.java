@@ -142,4 +142,12 @@ public class Game implements IGame {
     public void addPlayer(String name) {
         this.players.add(new Player(name, this));
     }
+
+    public int getTurnDirection() {
+        return turnDirection;
+    }
+
+    public int getTurnIndex() {
+        return turnIndex;
+    }
 }

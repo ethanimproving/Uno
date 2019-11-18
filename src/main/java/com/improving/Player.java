@@ -82,8 +82,10 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public IPlayer getNextPlayer() {
-        return null;
+    public IPlayer getNextPlayer(IGame game) {
+        int nextTurnIndex = game.getTurnIndex() + game.getTurnDirection();
+        int nextPlayer = game.turnEngine(nextTurnIndex);
+        return game.getPlayers().get(nextPlayer);
     }
 
     @Override

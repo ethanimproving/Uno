@@ -3,7 +3,7 @@ package com.improving;
 public interface IPlayerInfo {
     int getPlayerHandSize();
     IPlayer getPrevPlayer();
-    IPlayer getNextPlayer();
+    IPlayer getNextPlayer(IGame game);
     IPlayer getNextNextPlayer();
 
 }
