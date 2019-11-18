@@ -3,16 +3,16 @@ package com.improving;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class Player implements iPlayer {
+public class Player implements IPlayer {
     private String name;
     private LinkedList<Card> hand;
 
-    public Player(String name, iGame game) {
+    public Player(String name, IGame game) {
         this.name = name;
         initializeHand(game,7);
     }
 
-    private void initializeHand (iGame game, int size) {
+    private void initializeHand (IGame game, int size) {
         hand = new LinkedList<>();
         for (int i = 0; i < size; i++) {
             this.hand.add(draw(game));
@@ -20,7 +20,7 @@ public class Player implements iPlayer {
     }
 
     @Override
-    public Card takeTurn(iGame game) {
+    public Card takeTurn(IGame game) {
         for (var card : hand) {
             if (game.isPlayable(card)) {
                 playCard(game, card);
@@ -34,7 +34,7 @@ public class Player implements iPlayer {
         return null;
     }
 
-    private void playCard(iGame game, Card card) {
+    private void playCard(IGame game, Card card) {
         if (card.getColors() == null) game.playCard(card, chooseWildColor());
         // TODO: make color parameter optional.
         else game.playCard(card, null);
@@ -53,7 +53,7 @@ public class Player implements iPlayer {
     }
 
     @Override
-    public Card draw(iGame game) {
+    public Card draw(IGame game) {
         return game.draw();
     }
 
@@ -69,5 +69,25 @@ public class Player implements iPlayer {
     public LinkedList<Card> countCardsByColor(Colors blue) {
         var cards = new LinkedList<Card>();
         return cards;
+    }
+
+    @Override
+    public int getPlayerHandSize() {
+        return 0;
+    }
+
+    @Override
+    public IPlayer getPrevPlayer() {
+        return null;
+    }
+
+    @Override
+    public IPlayer getNextPlayer() {
+        return null;
+    }
+
+    @Override
+    public IPlayer getNextNextPlayer() {
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 package com.improving;
 
-public interface iGame {
+public interface IGame {
 
     boolean isPlayable(Card card);
     void playCard(Card card, Colors colors);

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class Game implements iGame {
+public class Game implements IGame {
     private Deck deck;
-    private List<iPlayer> players;
+    private List<IPlayer> players;
     private int turnDirection = 1;
     private int turnIndex = 0;
 
@@ -135,7 +135,7 @@ public class Game implements iGame {
         return deck.getDiscard();
     }
 
-    public List<iPlayer> getPlayers() {
+    public List<IPlayer> getPlayers() {
         return players;
     }
 

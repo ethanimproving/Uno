@@ -2,11 +2,11 @@ package com.improving;
 
 import java.util.LinkedList;
 
-public interface iPlayer {
+public interface IPlayer extends IPlayerInfo {
 
     int handSize();
-    Card draw(iGame game);
-    Card takeTurn(iGame game);
+    Card draw(IGame game);
+    Card takeTurn(IGame game);
 
     LinkedList<Card> getHand();
     String getName();

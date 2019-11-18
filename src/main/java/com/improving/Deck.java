@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class Deck implements iDeck{
+public class Deck implements IDeck {
     private LinkedList<Card> deck;
     private LinkedList<Card> discard;
 

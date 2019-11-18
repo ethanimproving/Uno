@@ -2,7 +2,7 @@ package com.improving;
 
 import java.util.LinkedList;
 
-public interface iDeck {
+public interface IDeck {
     Card draw();
     LinkedList<Card> getDiscard();
 }
