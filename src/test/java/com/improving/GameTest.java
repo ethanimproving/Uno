@@ -145,8 +145,17 @@ class GameTest {
 
     @Test
     void turnEngine_should_convert_negative_turn_index_into_player_index() {
-        // Arrange TODO: get game's turn index to -1
-        var turnIndex = -1;
+        // Arrange
+        game.getDiscard().add(new Card(Colors.Blue, Faces.Reverse));
+        game.getPlayers().get(0).getHand().clear();
+        game.getPlayers().get(1).getHand().clear();
+        game.getPlayers().get(0).getHand().add(new Card(Colors.Blue, Faces.Reverse));
+        game.getPlayers().get(0).getHand().add(new Card(Colors.Blue, Faces.Five));
+        game.getPlayers().get(1).getHand().add(new Card(Colors.Blue, Faces.Five));
+
+        game.getDeckPile().add(new Card(Colors.Blue, Faces.Five));
+
+        game.playGame();
 
         // Act
         var result = game.turnEngine();

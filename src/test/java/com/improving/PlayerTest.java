@@ -179,7 +179,7 @@ class PlayerTest {
     }
 
     @Test
-    void countCardsByColor_should_return_number_of_blues_in_playey_hand() {
+    void countCardsByColor_should_return_number_of_blues_in_player_hand() {
         // Arrange
         player.getHand().addAll(Arrays.asList(
                 new Card(Colors.Blue, Faces.Seven),
