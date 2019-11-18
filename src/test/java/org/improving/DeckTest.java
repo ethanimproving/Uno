@@ -3,7 +3,9 @@ package org.improving;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -143,5 +145,20 @@ class DeckTest {
         // Assert
         assertEquals(Card.class, result);
 
+    }
+
+    @Test
+    void Deck_should_construct_with_8_Reverse_cards() {
+        // Arrange
+        List<Card> reserveCards = new ArrayList<>();
+        for (var card : deck.getDeck()) {
+            if (card.getFace() == Face.Reverse) reserveCards.add(card);
+        }
+
+        // Act
+        var result = reserveCards.size();
+
+        // Assert
+        assertEquals(8, result);
     }
 }
