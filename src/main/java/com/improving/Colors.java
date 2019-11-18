@@ -1,6 +1,6 @@
-package org.improving;
+package com.improving;
 
-public enum Color {
+public enum Colors {
     Red,
     Green,
     Yellow,

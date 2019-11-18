@@ -1,12 +1,12 @@
-package org.improving;
+package com.improving;
 
 import java.util.LinkedList;
 
 public interface iPlayer {
 
     int handSize();
-    Card draw(Game game);
-    Card takeTurn(Game game);
+    Card draw(iGame game);
+    Card takeTurn(iGame game);
 
     LinkedList<Card> getHand();
     String getName();

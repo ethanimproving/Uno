@@ -1,4 +1,4 @@
-package org.improving;
+package com.improving;
 
 import org.springframework.stereotype.Component;
 
@@ -13,8 +13,8 @@ public class Deck implements iDeck{
         deck = new LinkedList<>();
         discard = new LinkedList<>();
 
-        for (var face : Face.values()) {
-            for (var color : Color.values()) {
+        for (var face : Faces.values()) {
+            for (var color : Colors.values()) {
                 if (face.getValue() == 50) {
                     deck.add(new Card(null, face));
                 } else {

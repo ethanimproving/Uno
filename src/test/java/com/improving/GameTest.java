@@ -1,4 +1,4 @@
-package org.improving;
+package com.improving;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,9 +24,9 @@ class GameTest {
     @Test
     void playGame_should_call_initializeDiscardPile_which_should_add_one_card_to_discard_pile() {
         // Arrange
-        game.getPlayers().get(0).getHand().add(new Card(Color.Yellow, Face.Five));
-        game.getDeckPile().add(new Card(Color.Yellow, Face.Five));
-        game.getDiscard().add(new Card(Color.Yellow, Face.Five));
+        game.getPlayers().get(0).getHand().add(new Card(Colors.Yellow, Faces.Five));
+        game.getDeckPile().add(new Card(Colors.Yellow, Faces.Five));
+        game.getDiscard().add(new Card(Colors.Yellow, Faces.Five));
 
         // Act
         game.playGame();
@@ -39,7 +39,7 @@ class GameTest {
     @Test
     void initializeDiscardPile_should_execute_action_card_on_player_one() {
         // Act
-        game.getDeckPile().add(new Card(Color.Blue, Face.WildDrawFour));
+        game.getDeckPile().add(new Card(Colors.Blue, Faces.WildDrawFour));
         game.initializeDiscardPile();
         var result = game.getPlayers().get(0).getHand().size();
 
@@ -50,19 +50,19 @@ class GameTest {
     @Test
     void playGame_should_declare_first_player_to_run_out_of_cards_as_winner() {
         // Arrange
-        game.getDiscard().add(new Card(Color.Blue, Face.Five));
+        game.getDiscard().add(new Card(Colors.Blue, Faces.Five));
         game.getDeckPile().addAll(Arrays.asList(
-                new Card(Color.Blue, Face.Five),
-                new Card(Color.Blue, Face.Five),
-                new Card(Color.Blue, Face.Five)
+                new Card(Colors.Blue, Faces.Five),
+                new Card(Colors.Blue, Faces.Five),
+                new Card(Colors.Blue, Faces.Five)
         ));
         game.getPlayers().get(0).getHand().addAll(Arrays.asList(
-                new Card(Color.Blue, Face.Five),
-                new Card(Color.Blue, Face.Five),
-                new Card(Color.Blue, Face.Five)
+                new Card(Colors.Blue, Faces.Five),
+                new Card(Colors.Blue, Faces.Five),
+                new Card(Colors.Blue, Faces.Five)
         ));
         game.getPlayers().get(1).getHand().addAll(Arrays.asList(
-                new Card(Color.Blue, Face.Five)
+                new Card(Colors.Blue, Faces.Five)
         ));
 
         // Act
@@ -79,8 +79,8 @@ class GameTest {
     @Test
     void isPlayable_should_return_true_when_player_hand_topcard_color_is_equal_to_deck_discard_topcard() {
         // Arrange
-        game.getPlayers().get(0).getHand().add(new Card(Color.Red, Face.Nine));
-        game.getDiscard().add(new Card(Color.Red, Face.Five));
+        game.getPlayers().get(0).getHand().add(new Card(Colors.Red, Faces.Nine));
+        game.getDiscard().add(new Card(Colors.Red, Faces.Five));
 
         // Act
         var result = game.isPlayable(game.getPlayers().get(0).getHand().getLast());
@@ -92,8 +92,8 @@ class GameTest {
     @Test
     void isPlayable_should_return_true_when_player_hand_topcard_face_is_equal_to_deck_discard_topcard() {
         // Arrange
-        game.getPlayers().get(0).getHand().add(new Card(Color.Blue, Face.Five));
-        game.getDiscard().add(new Card(Color.Red, Face.Five));
+        game.getPlayers().get(0).getHand().add(new Card(Colors.Blue, Faces.Five));
+        game.getDiscard().add(new Card(Colors.Red, Faces.Five));
 
         // Act
         var result = game.isPlayable(game.getPlayers().get(0).getHand().getLast());
@@ -105,8 +105,8 @@ class GameTest {
     @Test
     void isPlayable_should_return_false_when_neither_faces_nor_colors_match() {
         // Arrange
-        game.getPlayers().get(0).getHand().add(new Card(Color.Blue, Face.Six));
-        game.getDiscard().add(new Card(Color.Red, Face.Five));
+        game.getPlayers().get(0).getHand().add(new Card(Colors.Blue, Faces.Six));
+        game.getDiscard().add(new Card(Colors.Red, Faces.Five));
 
         // Act
         var result = game.isPlayable(game.getPlayers().get(0).getHand().getLast());
@@ -118,8 +118,8 @@ class GameTest {
     @Test
     void isPlayable_should_return_true_when_wild_card() {
         // Arrange
-        game.getPlayers().get(0).getHand().add(new Card(null, Face.Wild));
-        game.getDiscard().add(new Card(Color.Red, Face.Five));
+        game.getPlayers().get(0).getHand().add(new Card(null, Faces.Wild));
+        game.getDiscard().add(new Card(Colors.Red, Faces.Five));
 
         // Act
         var result = game.isPlayable(game.getPlayers().get(0).getHand().getLast());
@@ -159,19 +159,19 @@ class GameTest {
         var newGame = new Game();
         newGame.getDeckPile().clear();
         for (var player : newGame.getPlayers()) player.getHand().clear();
-        newGame.getDiscard().add(new Card(Color.Blue, Face.Five));
+        newGame.getDiscard().add(new Card(Colors.Blue, Faces.Five));
         newGame.getPlayers().get(0).getHand().addAll(Arrays.asList(
-                new Card(Color.Blue, Face.Reverse)
+                new Card(Colors.Blue, Faces.Reverse)
         ));
 
         for (var player : newGame.getPlayers()) {
             player.getHand().addAll(Arrays.asList(
-                    new Card(Color.Blue, Face.Five),
-                    new Card(Color.Blue, Face.Six),
-                    new Card(Color.Blue, Face.Seven)
+                    new Card(Colors.Blue, Faces.Five),
+                    new Card(Colors.Blue, Faces.Six),
+                    new Card(Colors.Blue, Faces.Seven)
             ));
         }
-        newGame.getDeckPile().add(new Card(Color.Blue, Face.Seven));
+        newGame.getDeckPile().add(new Card(Colors.Blue, Faces.Seven));
 
         // Act
         newGame.playGame();
@@ -183,14 +183,14 @@ class GameTest {
     @Test
     void executeSpecialCard_should_make_next_player_draw_four_when_current_player_plays_draw_four() {
         // Arrange
-        game.getDiscard().add(new Card(Color.Blue, Face.Five));
+        game.getDiscard().add(new Card(Colors.Blue, Faces.Five));
         game.getPlayers().get(1).getHand().addAll(Arrays.asList(
-                new Card(Color.Blue, Face.Five),
-                new Card(Color.Blue, Face.Five)
+                new Card(Colors.Blue, Faces.Five),
+                new Card(Colors.Blue, Faces.Five)
         ));
 
         // Act
-        game.executeSpecialCard(new Card(Color.Blue, Face.WildDrawFour));
+        game.executeSpecialCard(new Card(Colors.Blue, Faces.WildDrawFour));
         var result = game.getPlayers().get(1).getHand().size();
 
         // Assert

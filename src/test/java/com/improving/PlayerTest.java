@@ -1,4 +1,4 @@
-package org.improving;
+package com.improving;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,15 +51,15 @@ class PlayerTest {
     void playCard_should_remove_a_card_from_hand() {
         // Arrange
         player.getHand().addAll(Arrays.asList(
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five)
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five)
         ));
-        game.getDiscard().add(new Card(Color.Blue, Face.Five));
+        game.getDiscard().add(new Card(Colors.Blue, Faces.Five));
 
         // Act
         player.takeTurn(game);
@@ -72,15 +72,15 @@ class PlayerTest {
     @Test
     void takeTurn_Should_Remove_One_Card_From_Hand() {
         //Arrange
-        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Colors.Blue, Faces.Two));
         player.getHand().addAll(Arrays.asList(
-                new Card(Color.Blue, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Green, Face.Five),
-                new Card(Color.Yellow, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Blue, Face.Five),
-                new Card(Color.Red, Face.Five)
+                new Card(Colors.Blue, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Green, Faces.Five),
+                new Card(Colors.Yellow, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Blue, Faces.Five),
+                new Card(Colors.Red, Faces.Five)
         ));
         //Act
         player.takeTurn(game);
@@ -92,9 +92,9 @@ class PlayerTest {
     @Test
     void takeTurn_Should_Add_One_Card_To_DiscardPile() {
         //Arrange
-        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Colors.Blue, Faces.Two));
         player.getHand().addAll(Arrays.asList(
-                new Card(Color.Blue, Face.Five)
+                new Card(Colors.Blue, Faces.Five)
         ));
 
         //Act
@@ -107,16 +107,16 @@ class PlayerTest {
     @Test
     void takeTurn_Should_Play_First_Playable_Card() {
         //Arrange
-        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Colors.Blue, Faces.Two));
         hand.clear();
         hand.addAll(Arrays.asList(
-                new Card(Color.Red, Face.Seven),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Green, Face.Six),
-                new Card(Color.Yellow, Face.Zero),
-                new Card(Color.Blue, Face.Two),
-                new Card(Color.Red, Face.Three),
-                new Card(Color.Green, Face.One)
+                new Card(Colors.Red, Faces.Seven),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Green, Faces.Six),
+                new Card(Colors.Yellow, Faces.Zero),
+                new Card(Colors.Blue, Faces.Two),
+                new Card(Colors.Red, Faces.Three),
+                new Card(Colors.Green, Faces.One)
         ));
         //Act
         player.takeTurn(game);
@@ -129,11 +129,11 @@ class PlayerTest {
     @Test
     void takeTurn_Should_Draw_Card_If_Not_Playable() {
         //Arrange
-        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Colors.Blue, Faces.Two));
         hand.clear();
         hand.addAll(Arrays.asList(
-                new Card(Color.Red, Face.Seven),
-                new Card(Color.Red, Face.Five)
+                new Card(Colors.Red, Faces.Seven),
+                new Card(Colors.Red, Faces.Five)
 
         ));
         //Act
@@ -147,15 +147,15 @@ class PlayerTest {
     @Test
     void takeTurn_Should_Choose_A_Color_For_Wild_Card() {
         //Arrange
-        game.getDeck().getDiscard().add(new Card(Color.Blue, Face.Two));
+        game.getDeck().getDiscard().add(new Card(Colors.Blue, Faces.Two));
         hand.clear();
         hand.addAll(Arrays.asList(
-                new Card(null, Face.Wild)
+                new Card(null, Faces.Wild)
         ));
 
         //Act
         player.takeTurn(game);
-        var result = game.getDeck().getDeck().getLast().getColor() != null;
+        var result = game.getDeck().getDeck().getLast().getColors() != null;
 
         //Assert
         assertTrue(result);
@@ -167,14 +167,23 @@ class PlayerTest {
         var newGame = new Game();
 
         newGame.getPlayers().get(0).getHand().clear();
-        newGame.getPlayers().get(0).getHand().add(new Card(null, Face.Wild));
-        newGame.getDiscard().add(new Card(Color.Blue, Face.Seven));
+        newGame.getPlayers().get(0).getHand().add(new Card(null, Faces.Wild));
+        newGame.getDiscard().add(new Card(Colors.Blue, Faces.Seven));
 
         // Act
         newGame.getPlayers().get(0).takeTurn(newGame);
-        var result = newGame.getDiscard().getLast().getColor().getClass();
+        var result = newGame.getDiscard().getLast().getColors().getClass();
 
         // Assert
-        assertEquals(Color.class, result);
+        assertEquals(Colors.class, result);
+    }
+
+    @Test
+    void countCardsByColor_should_return_number_of_blues_in_playey_hand(Colors colors) {
+        // Act
+        var result = player.countCardsByColor(Colors.Blue).size();
+
+        // Assert
+        assertEquals(6, result);
     }
 }

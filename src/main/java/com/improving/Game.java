@@ -1,4 +1,4 @@
-package org.improving;
+package com.improving;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
@@ -15,6 +15,7 @@ public class Game implements iGame {
     public static void main(String[] args) {
         var context = new AnnotationConfigApplicationContext(SpringContext.class);
         var game = context.getBean(Game.class);
+
         game.playGame();
     }
 
@@ -76,16 +77,16 @@ public class Game implements iGame {
 
     @Override
     public boolean isPlayable(Card card) {
-        return deck.getDiscard().getLast().getColor().equals(card.getColor()) ||
-                deck.getDiscard().getLast().getFace().equals(card.getFace()) ||
-                card.getFace().getValue() == 50;
+        return deck.getDiscard().getLast().getColors().equals(card.getColors()) ||
+                deck.getDiscard().getLast().getFaces().equals(card.getFaces()) ||
+                card.getFaces().getValue() == 50;
     }
 
     public void executeSpecialCard(Card card) {
         int nextTurnIndex = turnIndex + turnDirection;
         int nextPlayer = turnEngine(nextTurnIndex);
 
-        switch (card.getFace()) {
+        switch (card.getFaces()) {
             case DrawTwo:
                 players.get(nextPlayer).getHand().add(draw());
                 players.get(nextPlayer).getHand().add(draw());
@@ -117,8 +118,8 @@ public class Game implements iGame {
     }
 
     @Override
-    public void playCard(Card card, Color color) {
-        if (card.getColor() == null) card.setColor(color);
+    public void playCard(Card card, Colors colors) {
+        if (card.getColors() == null) card.setColors(colors);
         deck.getDiscard().add(card);
     }
 

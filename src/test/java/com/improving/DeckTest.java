@@ -1,4 +1,4 @@
-package org.improving;
+package com.improving;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,13 +50,13 @@ class DeckTest {
         // Arrange
         deck.getDeck().clear();
         deck.getDiscard().addAll(Arrays.asList(
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Blue, Face.Five)
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Blue, Faces.Five)
         ));
 
         // Act
@@ -73,10 +73,10 @@ class DeckTest {
         // Arrange
         deck.getDeck().clear();
         deck.getDiscard().addAll(Arrays.asList(
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Blue, Face.Five)
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Blue, Faces.Five)
         ));
 
         // Act
@@ -84,7 +84,7 @@ class DeckTest {
         var result = deck.getDiscard().getLast();
 
         // Assert
-        assertEquals(new Card(Color.Blue, Face.Five).toString(), result.toString());
+        assertEquals(new Card(Colors.Blue, Faces.Five).toString(), result.toString());
     }
 
     @Test
@@ -92,10 +92,10 @@ class DeckTest {
         // Arrange
         deck.getDeck().clear();
         deck.getDiscard().addAll(Arrays.asList(
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Blue, Face.Five)
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Blue, Faces.Five)
         ));
 
         // Act
@@ -111,10 +111,10 @@ class DeckTest {
         // Arrange
         deck.getDeck().clear();
         deck.getDiscard().addAll(Arrays.asList(
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Blue, Face.Five)
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Blue, Faces.Five)
         ));
 
         // Act
@@ -130,13 +130,13 @@ class DeckTest {
         // Arrange
         deck.getDeck().clear();
         deck.getDiscard().addAll(Arrays.asList(
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Red, Face.Five),
-                new Card(Color.Blue, Face.Five)
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Red, Faces.Five),
+                new Card(Colors.Blue, Faces.Five)
         ));
 
         // Act
@@ -152,7 +152,7 @@ class DeckTest {
         // Arrange
         List<Card> reserveCards = new ArrayList<>();
         for (var card : deck.getDeck()) {
-            if (card.getFace() == Face.Reverse) reserveCards.add(card);
+            if (card.getFaces() == Faces.Reverse) reserveCards.add(card);
         }
 
         // Act

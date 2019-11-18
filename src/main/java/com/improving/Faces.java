@@ -1,6 +1,6 @@
-package org.improving;
+package com.improving;
 
-public enum Face {
+public enum Faces {
     Zero(0),
     One(1),
     Two(2),
@@ -19,7 +19,7 @@ public enum Face {
 
     private int value;
 
-    Face(int value) {
+    Faces(int value) {
         this.value = value;
     }
 
