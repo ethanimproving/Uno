@@ -85,24 +85,29 @@ public class Game implements iGame {
         int nextTurnIndex = turnIndex + turnDirection;
         int nextPlayer = turnEngine(nextTurnIndex);
 
-        if(card.getFace() == Face.DrawTwo) {
-            players.get(nextPlayer).getHand().add(draw());
-            players.get(nextPlayer).getHand().add(draw());
-            System.out.println(players.get(nextPlayer).getName() + " has drawn two cards.");
-            incrementTurn();
-        } else if(card.getFace() == Face.WildDrawFour) {
-            players.get(nextPlayer).getHand().add(draw());
-            players.get(nextPlayer).getHand().add(draw());
-            players.get(nextPlayer).getHand().add(draw());
-            players.get(nextPlayer).getHand().add(draw());
-            System.out.println(players.get(nextPlayer).getName() + " has drawn FOUR cards. Sorry bud!");
-            incrementTurn();
-        } else if(card.getFace() == Face.Reverse) {
-            turnDirection = turnDirection * -1;
-            System.out.println("Player direction has been REVERSED.");
-        } else if(card.getFace() == Face.Skip) {
-            System.out.println(players.get(nextPlayer).getName() + " has been SKIPPED.");
-            incrementTurn();
+        switch (card.getFace()) {
+            case DrawTwo:
+                players.get(nextPlayer).getHand().add(draw());
+                players.get(nextPlayer).getHand().add(draw());
+                System.out.println(players.get(nextPlayer).getName() + " has drawn two cards.");
+                incrementTurn();
+                break;
+            case WildDrawFour:
+                players.get(nextPlayer).getHand().add(draw());
+                players.get(nextPlayer).getHand().add(draw());
+                players.get(nextPlayer).getHand().add(draw());
+                players.get(nextPlayer).getHand().add(draw());
+                System.out.println(players.get(nextPlayer).getName() + " has drawn FOUR cards. Sorry bud!");
+                incrementTurn();
+                break;
+            case Reverse:
+                turnDirection = turnDirection * -1;
+                System.out.println("Player direction has been REVERSED.");
+                break;
+            case Skip:
+                System.out.println(players.get(nextPlayer).getName() + " has been SKIPPED.");
+                incrementTurn();
+                break;
         }
     }
 
