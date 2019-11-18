@@ -180,8 +180,19 @@ class PlayerTest {
 
     @Test
     void countCardsByColor_should_return_number_of_blues_in_playey_hand() {
+        // Arrange
+        player.getHand().addAll(Arrays.asList(
+                new Card(Colors.Blue, Faces.Seven),
+                new Card(Colors.Blue, Faces.Five),
+                new Card(Colors.Blue, Faces.Six),
+                new Card(Colors.Yellow, Faces.Zero),
+                new Card(Colors.Blue, Faces.Two),
+                new Card(Colors.Blue, Faces.Three),
+                new Card(Colors.Blue, Faces.One)
+        ));
+
         // Act
-        var result = player.countCardsByColor(Colors.Blue).size();
+        var result = player.countCardsByColor(Colors.Blue);
 
         // Assert
         assertEquals(6, result);

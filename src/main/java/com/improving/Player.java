@@ -1,6 +1,8 @@
 package com.improving;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Player implements IPlayer {
@@ -66,9 +68,10 @@ public class Player implements IPlayer {
         return name;
     }
 
-    public LinkedList<Card> countCardsByColor(Colors blue) {
-        var cards = new LinkedList<Card>();
-        return cards;
+    public int countCardsByColor(Colors color) {
+        var cards = new ArrayList<Card>();
+        for (var card : hand) if (card.getColors().equals(color)) cards.add(card);
+        return cards.size();
     }
 
     @Override
