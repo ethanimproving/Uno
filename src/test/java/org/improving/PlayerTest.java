@@ -17,7 +17,7 @@ class PlayerTest {
     void init() {
         // Arrange
         game = new Game();
-        player = new Player("Ethan", game.getDeck());
+        player = new Player("Ethan", game);
         hand = player.getHand();
         hand.clear();
         game.getDeck().getDiscard().clear();
@@ -26,7 +26,7 @@ class PlayerTest {
     @Test
     void initializeHand_should_contain_x_cards() {
         // Act
-        var result = new Player("Ethan", new Deck()).getHand().size();
+        var result = new Player("Ethan", game).getHand().size();
 
         // Assert
         assertEquals(7, result);
@@ -35,11 +35,13 @@ class PlayerTest {
     @Test
     void Hand_of_7_cards_should_leave_deck_with_105_cards() {
         // Arrange
-        var deck = new Deck();
+        var newGame = new Game();
+        newGame.getDeckPile().clear();
+        newGame.getDeckPile().addAll(new Deck().getDeck());
 
         // Act
-        new Player("Ethan", deck);
-        var result = deck.getDeck().size();
+        new Player("Ethan", newGame);
+        var result = newGame.getDeckPile().size();
 
         // Assert
         assertEquals(112-7, result);
@@ -166,6 +168,7 @@ class PlayerTest {
 
         newGame.getPlayers().get(0).getHand().clear();
         newGame.getPlayers().get(0).getHand().add(new Card(null, Face.Wild));
+        newGame.getDiscard().add(new Card(Color.Blue, Face.Seven));
 
         // Act
         newGame.getPlayers().get(0).takeTurn(newGame);

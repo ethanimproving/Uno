@@ -7,15 +7,15 @@ public class Player implements iPlayer {
     private String name;
     private LinkedList<Card> hand;
 
-    public Player(String name, Deck deck) {
+    public Player(String name, Game game) {
         this.name = name;
-        initializeHand(deck, 7);
+        initializeHand(game,7);
     }
 
-    private void initializeHand (Deck deck, int size) {
+    private void initializeHand (Game game, int size) {
         hand = new LinkedList<>();
         for (int i = 0; i < size; i++) {
-            this.hand.add(deck.draw());
+            this.hand.add(draw(game));
         }
     }
 

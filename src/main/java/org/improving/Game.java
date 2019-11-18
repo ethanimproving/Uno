@@ -22,9 +22,9 @@ public class Game implements iGame {
         this.deck = new Deck();
         this.players = new ArrayList<>();
         this.players.addAll(Arrays.asList(
-                new Player("David O\'Hera", this.deck),
-                new Player("Tim Rayburn", this.deck),
-                new Player("Ethan Miller", this.deck)
+                new Player("David O\'Hera", this),
+                new Player("Tim Rayburn", this),
+                new Player("Ethan Miller", this)
         ));
     }
 
@@ -52,7 +52,7 @@ public class Game implements iGame {
             turns++;
 
             // Check if player has won.
-            if (players.get(currentPlayer).getHand().size() <= 0) {
+            if (players.get(currentPlayer).handSize() <= 0) {
                 System.out.println("\n" + players.get(currentPlayer).getName() + " has won the game! It lasted " + turns + " " +
                         "turns.");
                 return;
@@ -134,6 +134,6 @@ public class Game implements iGame {
     }
 
     public void addPlayer(String name) {
-        this.players.add(new Player(name, deck));
+        this.players.add(new Player(name, this));
     }
 }
