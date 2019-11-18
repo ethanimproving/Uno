@@ -130,24 +130,26 @@ class GameTest {
 
     @Test
     void turnEngine_should_convert_turn_index_into_player_index() {
-        // Arrange
+        // Arrange TODO: get game's turnIndex to 2
         var turnIndex = 2;
 
         // Act
-        var result = game.turnEngine(turnIndex);
+        var result = game.turnEngine();
 
         // Assert
         assertEquals(0, result);
-        assertEquals(0, game.turnEngine(18));
+
+        // TODO: get game's turnIndex to 18
+        assertEquals(0, game.turnEngine());
     }
 
     @Test
     void turnEngine_should_convert_negative_turn_index_into_player_index() {
-        // Arrange
+        // Arrange TODO: get game's turn index to -1
         var turnIndex = -1;
 
         // Act
-        var result = game.turnEngine(turnIndex);
+        var result = game.turnEngine();
 
         // Assert
         assertEquals(1, result);

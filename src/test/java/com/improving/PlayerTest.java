@@ -179,7 +179,7 @@ class PlayerTest {
     }
 
     @Test
-    void countCardsByColor_should_return_number_of_blues_in_playey_hand(Colors colors) {
+    void countCardsByColor_should_return_number_of_blues_in_playey_hand() {
         // Act
         var result = player.countCardsByColor(Colors.Blue).size();
 

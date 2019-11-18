@@ -10,7 +10,6 @@ public interface IGame {
 
     int getTurnIndex();
     int getTurnDirection();
-    int turnEngine(int turnIndex);
 
     List<IPlayer> getPlayers();
     Deck getDeck();

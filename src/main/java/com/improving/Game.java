@@ -43,7 +43,7 @@ public class Game implements IGame {
 
         while (true) {
             // Determine current player.
-            currentPlayer = turnEngine(turnIndex);
+            currentPlayer = turnEngine();
 
             // Take turn and if card was played, check card behavior.
             var cardPlayed = players.get(currentPlayer).takeTurn(this);
@@ -71,7 +71,7 @@ public class Game implements IGame {
         turnIndex = turnIndex + turnDirection;
     }
 
-    public int turnEngine(int turnIndex) {
+    public int turnEngine() {
         if (this.turnIndex <= 0) this.turnIndex = this.turnIndex + players.size();
         return this.turnIndex % players.size();
     }
@@ -84,22 +84,21 @@ public class Game implements IGame {
     }
 
     public void executeSpecialCard(Card card) {
-        int nextTurnIndex = turnIndex + turnDirection;
-        int nextPlayer = turnEngine(nextTurnIndex);
+        var nextPlayer = getPlayers().get(0).getNextPlayer(this);
 
         switch (card.getFaces()) {
             case DrawTwo:
-                players.get(nextPlayer).getHand().add(draw());
-                players.get(nextPlayer).getHand().add(draw());
-                System.out.println(players.get(nextPlayer).getName() + " has drawn two cards.");
+                nextPlayer.getHand().add(draw());
+                nextPlayer.getHand().add(draw());
+                System.out.println(nextPlayer.getName() + " has drawn two cards.");
                 incrementTurn();
                 break;
             case WildDrawFour:
-                players.get(nextPlayer).getHand().add(draw());
-                players.get(nextPlayer).getHand().add(draw());
-                players.get(nextPlayer).getHand().add(draw());
-                players.get(nextPlayer).getHand().add(draw());
-                System.out.println(players.get(nextPlayer).getName() + " has drawn FOUR cards. Sorry bud!");
+                nextPlayer.getHand().add(draw());
+                nextPlayer.getHand().add(draw());
+                nextPlayer.getHand().add(draw());
+                nextPlayer.getHand().add(draw());
+                System.out.println(nextPlayer.getName() + " has drawn FOUR cards. Sorry bud!");
                 incrementTurn();
                 break;
             case Reverse:
@@ -107,7 +106,7 @@ public class Game implements IGame {
                 System.out.println("Player direction has been REVERSED.");
                 break;
             case Skip:
-                System.out.println(players.get(nextPlayer).getName() + " has been SKIPPED.");
+                System.out.println(nextPlayer.getName() + " has been SKIPPED.");
                 incrementTurn();
                 break;
         }
