@@ -72,7 +72,8 @@ public class Game implements IGame {
     }
 
     public int turnEngine(int turnIndex) {
-        return Math.abs(turnIndex % players.size());
+        if (this.turnIndex <= 0) this.turnIndex = this.turnIndex + players.size();
+        return this.turnIndex % players.size();
     }
 
     @Override

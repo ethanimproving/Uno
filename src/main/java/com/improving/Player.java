@@ -76,22 +76,25 @@ public class Player implements IPlayer {
         return 0;
     }
 
+    private IPlayer getPlayer(IGame game, int turnIndex) {
+        if (turnIndex <= 0) turnIndex = turnIndex + game.getPlayers().size();
+        int nextPlayer = turnIndex % game.getPlayers().size();
+        return game.getPlayers().get(nextPlayer);
+    }
+
     @Override
     public IPlayer getPrevPlayer(IGame game) {
-        return null;
+        var i = game.getTurnIndex() - game.getTurnDirection();
+        return getPlayer(game, i);
     }
 
     @Override
     public IPlayer getNextPlayer(IGame game) {
-        int nextTurnIndex = game.getTurnIndex() + game.getTurnDirection();
-        int nextPlayer = game.turnEngine(nextTurnIndex);
-        return game.getPlayers().get(nextPlayer);
+        return getPlayer(game, game.getTurnIndex() + game.getTurnDirection());
     }
 
     @Override
     public IPlayer getNextNextPlayer(IGame game) {
-        int nextTurnIndex = game.getTurnIndex() + game.getTurnDirection() * 2;
-        int nextPlayer = game.turnEngine(nextTurnIndex);
-        return game.getPlayers().get(nextPlayer);
+        return getPlayer(game, game.getTurnIndex() + game.getTurnDirection() * 2);
     }
 }
