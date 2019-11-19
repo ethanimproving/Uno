@@ -134,7 +134,7 @@ class GameTest {
         // Arrange
         game.getDiscard().add(new Card(null, Faces.Wild));
         game.getDeckPile().add(new Card(Colors.Red, Faces.Seven));
-        game.setChosenColor(Optional.of(Colors.Red));
+        game.playCard(new Card(null, Faces.Wild), Optional.of(Colors.Red));
 
         game.getPlayers().get(0).getHand().add(new Card(Colors.Red, Faces.Seven));
 

@@ -160,7 +160,7 @@ public class Game implements IGame {
         return chosenColor;
     }
 
-    public void setChosenColor(Optional<Colors> chosenColor) {
+    private void setChosenColor(Optional<Colors> chosenColor) {
         this.chosenColor = chosenColor;
     }
 }
