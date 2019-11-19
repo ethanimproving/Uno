@@ -1,5 +1,8 @@
 package com.improving;
 
+import com.improving.players.IPlayer;
+
+import java.util.LinkedList;
 import java.util.List;
 
 public interface IGame {
@@ -13,4 +16,5 @@ public interface IGame {
 
     List<IPlayer> getPlayers();
     Deck getDeck();
+    LinkedList<Card> getDiscard();
 }

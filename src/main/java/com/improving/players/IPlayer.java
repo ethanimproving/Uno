@@ -1,4 +1,7 @@
-package com.improving;
+package com.improving.players;
+
+import com.improving.Card;
+import com.improving.IGame;
 
 import java.util.LinkedList;
 

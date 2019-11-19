@@ -1,4 +1,9 @@
-package com.improving;
+package com.improving.players;
+
+import com.improving.Card;
+import com.improving.Colors;
+import com.improving.IGame;
+import com.improving.players.IPlayer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -6,7 +11,7 @@ import java.util.Random;
 
 public abstract class BasePlayerClass implements IPlayer {
     private String name;
-    private LinkedList<Card> hand;
+    protected LinkedList<Card> hand;
 
     public BasePlayerClass(String name, IGame game) {
         this.name = name;
@@ -37,7 +42,7 @@ public abstract class BasePlayerClass implements IPlayer {
         return null;
     }
 
-    private Card pickCard(IGame game) {
+    protected Card pickCard(IGame game) {
         for (var card : hand) {
             if (game.isPlayable(card)) {
                 return card;

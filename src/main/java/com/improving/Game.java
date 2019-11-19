@@ -1,5 +1,7 @@
 package com.improving;
 
+import com.improving.players.IPlayer;
+import com.improving.players.Player;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -78,6 +80,7 @@ public class Game implements IGame {
 
     @Override
     public boolean isPlayable(Card card) {
+        // TODO: NullPointerException
         return deck.getDiscard().getLast().getColors().equals(card.getColors()) ||
                 deck.getDiscard().getLast().getFaces().equals(card.getFaces()) ||
                 card.getFaces().getValue() == 50;
