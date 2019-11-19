@@ -4,11 +4,12 @@ import com.improving.players.IPlayer;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public interface IGame {
 
     boolean isPlayable(Card card);
-    void playCard(Card card, Colors colors);
+    void playCard(Card card, Optional<Colors> optionalColor);
     Card draw();
 
     int getTurnIndex();

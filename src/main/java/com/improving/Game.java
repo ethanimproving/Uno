@@ -13,6 +13,7 @@ public class Game implements IGame {
     private List<IPlayer> players;
     private int turnDirection = 1;
     private int turnIndex = 0;
+    Optional<Colors> chosenColor;
 
     public static void main(String[] args) {
         var context = new AnnotationConfigApplicationContext(SpringContext.class);
@@ -80,10 +81,10 @@ public class Game implements IGame {
 
     @Override
     public boolean isPlayable(Card card) {
-        // TODO: NullPointerException
-        return deck.getDiscard().getLast().getColors().equals(card.getColors()) ||
-                deck.getDiscard().getLast().getFaces().equals(card.getFaces()) ||
-                card.getFaces().getValue() == 50;
+         return card.getFaces().getValue() == 50 ||
+                (deck.getDiscard().getLast().getFaces().getValue() == 50 && Optional.of(card.getColors()).equals(chosenColor)) ||
+                deck.getDiscard().getLast().getColors() == card.getColors() ||
+                deck.getDiscard().getLast().getFaces() == card.getFaces();
     }
 
     public void executeSpecialCard(Card card) {
@@ -121,10 +122,11 @@ public class Game implements IGame {
     }
 
     @Override
-    public void playCard(Card card, Colors colors) {
-        if (card.getColors() == null) card.setColors(colors);
+    public void playCard(Card card, Optional<Colors> chosenColor) {
+        if (card.getColors() == null) setChosenColor(Optional.of(chosenColor).orElse(null));;
         deck.getDiscard().add(card);
     }
+
 
     public List<Card> getDeckPile() {
         return deck.getDeck();
@@ -152,5 +154,13 @@ public class Game implements IGame {
 
     public int getTurnIndex() {
         return turnIndex;
+    }
+
+    public Optional<Colors> getChosenColor() {
+        return chosenColor;
+    }
+
+    public void setChosenColor(Optional<Colors> chosenColor) {
+        this.chosenColor = chosenColor;
     }
 }

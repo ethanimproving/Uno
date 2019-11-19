@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -125,6 +126,23 @@ class GameTest {
         var result = game.isPlayable(game.getPlayers().get(0).getHand().getLast());
 
         // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void isPlayable_should_return_true_when_wild_card_is_top_of_discard_with_color_set() {
+        // Arrange
+        game.getDiscard().add(new Card(null, Faces.Wild));
+        game.getDeckPile().add(new Card(Colors.Red, Faces.Seven));
+        game.setChosenColor(Optional.of(Colors.Red));
+
+        game.getPlayers().get(0).getHand().add(new Card(Colors.Red, Faces.Seven));
+
+        // Act
+        var result = game.isPlayable(game.getPlayers().get(0).getHand().getLast());
+
+        // Assert
+        assertEquals(game.getChosenColor(), Optional.of(game.getPlayers().get(0).getHand().getLast().getColors()));
         assertTrue(result);
     }
 

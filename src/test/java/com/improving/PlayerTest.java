@@ -146,7 +146,7 @@ class PlayerTest {
     }
 
     @Test
-    void takeTurn_Should_Choose_A_Color_For_Wild_Card() {
+    void takeTurn_Should_Choose_A_Color_For_Game_When_Wild_Card_Is_Played() {
         //Arrange
         game.getDeck().getDiscard().add(new Card(Colors.Blue, Faces.Two));
         hand.clear();
@@ -156,7 +156,7 @@ class PlayerTest {
 
         //Act
         player.takeTurn(game);
-        var result = game.getDeck().getDeck().getLast().getColors() != null;
+        var result = game.getChosenColor().isPresent();
 
         //Assert
         assertTrue(result);
@@ -165,15 +165,10 @@ class PlayerTest {
     @Test
     void chooseColor_should_return_a_color() {
         // Arrange
-        var newGame = new Game();
-
-        newGame.getPlayers().get(0).getHand().clear();
-        newGame.getPlayers().get(0).getHand().add(new Card(null, Faces.Wild));
-        newGame.getDiscard().add(new Card(Colors.Blue, Faces.Seven));
+        var player = new Player("Ethan", game);
 
         // Act
-        newGame.getPlayers().get(0).takeTurn(newGame);
-        var result = newGame.getDiscard().getLast().getColors().getClass();
+        var result = player.chooseColor().getClass();
 
         // Assert
         assertEquals(Colors.class, result);

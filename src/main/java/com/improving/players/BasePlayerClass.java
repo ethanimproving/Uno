@@ -3,10 +3,10 @@ package com.improving.players;
 import com.improving.Card;
 import com.improving.Colors;
 import com.improving.IGame;
-import com.improving.players.IPlayer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Random;
 
 public abstract class BasePlayerClass implements IPlayer {
@@ -52,13 +52,13 @@ public abstract class BasePlayerClass implements IPlayer {
     }
 
     private void playCard(IGame game, Card card) {
-        if (card.getColors() == null) game.playCard(card, chooseWildColor());
+        if (card.getColors() == null) game.playCard(card, Optional.of(chooseColor()));
             // TODO: make color parameter optional.
         else game.playCard(card, null);
         hand.remove(card);
     }
 
-    private Colors chooseWildColor() {
+    public Colors chooseColor() {
         // TODO: Prompt user to choose color. Hint: Choose different picking strategies for bots.
         var random = new Random().nextInt(4);
         return Colors.values()[random];
