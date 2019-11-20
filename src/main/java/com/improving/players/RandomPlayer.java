@@ -3,9 +3,9 @@ package com.improving.players;
 import com.improving.Card;
 import com.improving.IGame;
 
-public class Player extends BasePlayerClass {
+public class RandomPlayer extends BasePlayerClass {
 
-    public Player(String name, IGame game) {
+    public RandomPlayer(String name, IGame game) {
         super(name, game);
     }
 

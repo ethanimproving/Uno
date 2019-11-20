@@ -1,6 +1,6 @@
 package com.improving;
 
-import com.improving.players.Player;
+import com.improving.players.RandomPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    Player player;
+    RandomPlayer randomPlayer;
     List<Card> hand;
     Game game;
 
@@ -18,8 +18,8 @@ class PlayerTest {
     void init() {
         // Arrange
         game = new Game();
-        player = new Player("Ethan", game);
-        hand = player.getHand();
+        randomPlayer = new RandomPlayer("Ethan", game);
+        hand = randomPlayer.getHand();
         hand.clear();
         game.getDeck().getDiscard().clear();
     }
@@ -27,7 +27,7 @@ class PlayerTest {
     @Test
     void initializeHand_should_contain_x_cards() {
         // Act
-        var result = new Player("Ethan", game).getHand().size();
+        var result = new RandomPlayer("Ethan", game).getHand().size();
 
         // Assert
         assertEquals(7, result);
@@ -41,7 +41,7 @@ class PlayerTest {
         newGame.getDeckPile().addAll(new Deck().getDeck());
 
         // Act
-        new Player("Ethan", newGame);
+        new RandomPlayer("Ethan", newGame);
         var result = newGame.getDeckPile().size();
 
         // Assert
@@ -51,7 +51,7 @@ class PlayerTest {
     @Test
     void playCard_should_remove_a_card_from_hand() {
         // Arrange
-        player.getHand().addAll(Arrays.asList(
+        randomPlayer.getHand().addAll(Arrays.asList(
                 new Card(Colors.Red, Faces.Five),
                 new Card(Colors.Red, Faces.Five),
                 new Card(Colors.Red, Faces.Five),
@@ -63,8 +63,8 @@ class PlayerTest {
         game.getDiscard().add(new Card(Colors.Blue, Faces.Five));
 
         // Act
-        player.takeTurn(game);
-        var result = player.getHand().size();
+        randomPlayer.takeTurn(game);
+        var result = randomPlayer.getHand().size();
 
         // Assert
         assertEquals(6, result);
@@ -74,7 +74,7 @@ class PlayerTest {
     void takeTurn_Should_Remove_One_Card_From_Hand() {
         //Arrange
         game.getDeck().getDiscard().add(new Card(Colors.Blue, Faces.Two));
-        player.getHand().addAll(Arrays.asList(
+        randomPlayer.getHand().addAll(Arrays.asList(
                 new Card(Colors.Blue, Faces.Five),
                 new Card(Colors.Red, Faces.Five),
                 new Card(Colors.Green, Faces.Five),
@@ -84,8 +84,8 @@ class PlayerTest {
                 new Card(Colors.Red, Faces.Five)
         ));
         //Act
-        player.takeTurn(game);
-        var result = player.getHand().size();
+        randomPlayer.takeTurn(game);
+        var result = randomPlayer.getHand().size();
 
         //Assert
         assertEquals(6, result);
@@ -94,12 +94,12 @@ class PlayerTest {
     void takeTurn_Should_Add_One_Card_To_DiscardPile() {
         //Arrange
         game.getDeck().getDiscard().add(new Card(Colors.Blue, Faces.Two));
-        player.getHand().addAll(Arrays.asList(
+        randomPlayer.getHand().addAll(Arrays.asList(
                 new Card(Colors.Blue, Faces.Five)
         ));
 
         //Act
-        player.takeTurn(game);
+        randomPlayer.takeTurn(game);
         var result = game.getDeck().getDiscard().size();
 
         //Assert
@@ -120,7 +120,7 @@ class PlayerTest {
                 new Card(Colors.Green, Faces.One)
         ));
         //Act
-        player.takeTurn(game);
+        randomPlayer.takeTurn(game);
         var result = game.getDeck().getDiscard().size();
 
         //Assert
@@ -138,7 +138,7 @@ class PlayerTest {
 
         ));
         //Act
-        player.takeTurn(game);
+        randomPlayer.takeTurn(game);
         var result = hand.size();
 
         //Assert
@@ -155,7 +155,7 @@ class PlayerTest {
         ));
 
         //Act
-        player.takeTurn(game);
+        randomPlayer.takeTurn(game);
         var result = game.getChosenColor().isPresent();
 
         //Assert
@@ -165,7 +165,7 @@ class PlayerTest {
     @Test
     void chooseColor_should_return_a_color() {
         // Arrange
-        var player = new Player("Ethan", game);
+        var player = new RandomPlayer("Ethan", game);
 
         // Act
         var result = player.chooseColor(game).getClass();
@@ -177,7 +177,7 @@ class PlayerTest {
     @Test
     void countCardsByColor_should_return_number_of_blues_in_player_hand() {
         // Arrange
-        player.getHand().addAll(Arrays.asList(
+        randomPlayer.getHand().addAll(Arrays.asList(
                 new Card(Colors.Blue, Faces.Seven),
                 new Card(Colors.Blue, Faces.Five),
                 new Card(Colors.Blue, Faces.Six),
@@ -188,7 +188,7 @@ class PlayerTest {
         ));
 
         // Act
-        var result = player.countCardsByColor(Colors.Blue);
+        var result = randomPlayer.countCardsByColor(Colors.Blue);
 
         // Assert
         assertEquals(6, result);

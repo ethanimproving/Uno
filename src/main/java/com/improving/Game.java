@@ -1,7 +1,7 @@
 package com.improving;
 
 import com.improving.players.IPlayer;
-import com.improving.players.Player;
+import com.improving.players.RandomPlayer;
 import com.improving.players.SmartPlayer;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
@@ -12,25 +12,35 @@ import java.util.*;
 public class Game implements IGame {
     private Deck deck;
     private List<IPlayer> players;
+    private List<Integer> playerWins;
     private int turnDirection = 1;
     private int turnIndex = 0;
-    Optional<Colors> chosenColor;
+    private Optional<Colors> chosenColor;
 
     public static void main(String[] args) {
         var context = new AnnotationConfigApplicationContext(SpringContext.class);
         var game = context.getBean(Game.class);
 
-        game.playGame();
+        for (int i = 0; i < 50; i++) {
+            game.playGame();
+        }
+
+        for (int i = 0; i < game.players.size(); i++) {
+            System.out.println(game.players.get(i).getName() + " wins: " + game.playerWins.get(i));
+        }
+
     }
 
     public Game() {
         this.deck = new Deck();
         this.players = new ArrayList<>();
         this.players.addAll(Arrays.asList(
-                new Player("David O\'Hera", this),
-                new Player("Tim Rayburn", this),
+                new RandomPlayer("David O\'Hera", this),
+                new RandomPlayer("Tim Rayburn", this),
                 new SmartPlayer("Ethan Miller", this)
         ));
+        this.playerWins = new ArrayList<>();
+        this.players.forEach(p -> this.playerWins.add(0));
     }
 
     public void initializeDiscardPile() {
@@ -58,6 +68,7 @@ public class Game implements IGame {
 
             // Check if player has won.
             if (players.get(currentPlayer).handSize() <= 0) {
+                playerWins.set(currentPlayer, playerWins.get(currentPlayer) + 1);
                 System.out.println("\n" + players.get(currentPlayer).getName() + " has won the game! It lasted " + turns + " " +
                         "turns.");
                 return;
@@ -146,7 +157,7 @@ public class Game implements IGame {
     }
 
     public void addPlayer(String name) {
-        this.players.add(new Player(name, this));
+        this.players.add(new RandomPlayer(name, this));
     }
 
     public int getTurnDirection() {

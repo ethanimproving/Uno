@@ -13,4 +13,5 @@ public interface IPlayer extends IPlayerInfo {
 
     LinkedList<Card> getHand();
     String getName();
+
 }

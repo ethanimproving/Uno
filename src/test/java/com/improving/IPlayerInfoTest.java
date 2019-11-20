@@ -1,7 +1,7 @@
 package com.improving;
 
 import com.improving.players.IPlayerInfo;
-import com.improving.players.Player;
+import com.improving.players.RandomPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class IPlayerInfoTest {
     void arrange() {
         game = new Game();
         game.addPlayer("Brian");
-        playerInfo = new Player("Ethan", game);
+        playerInfo = new RandomPlayer("Ethan", game);
     }
 
     @Test
