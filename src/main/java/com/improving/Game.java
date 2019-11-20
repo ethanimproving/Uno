@@ -2,6 +2,7 @@ package com.improving;
 
 import com.improving.players.IPlayer;
 import com.improving.players.Player;
+import com.improving.players.SmartPlayer;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +29,7 @@ public class Game implements IGame {
         this.players.addAll(Arrays.asList(
                 new Player("David O\'Hera", this),
                 new Player("Tim Rayburn", this),
-                new Player("Ethan Miller", this)
+                new SmartPlayer("Ethan Miller", this)
         ));
     }
 

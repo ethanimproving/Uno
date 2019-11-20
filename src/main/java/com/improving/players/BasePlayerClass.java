@@ -2,6 +2,7 @@ package com.improving.players;
 
 import com.improving.Card;
 import com.improving.Colors;
+import com.improving.Game;
 import com.improving.IGame;
 
 import java.util.ArrayList;
@@ -52,13 +53,13 @@ public abstract class BasePlayerClass implements IPlayer {
     }
 
     private void playCard(IGame game, Card card) {
-        if (card.getColors() == null) game.playCard(card, Optional.of(chooseColor()));
-            // TODO: make color parameter optional.
+        if (card.getColors() == null) game.playCard(card, Optional.of(chooseColor(game)));
+        // TODO: make color parameter optional.
         else game.playCard(card, null);
         hand.remove(card);
     }
 
-    public Colors chooseColor() {
+    public Colors chooseColor(IGame game) {
         // TODO: Prompt user to choose color. Hint: Choose different picking strategies for bots.
         var random = new Random().nextInt(4);
         return Colors.values()[random];
@@ -85,7 +86,7 @@ public abstract class BasePlayerClass implements IPlayer {
 
     public int countCardsByColor(Colors color) {
         var cards = new ArrayList<Card>();
-        for (var card : hand) if (card.getColors().equals(color)) cards.add(card);
+        for (var card : hand) if (card.getColors() == color) cards.add(card);
         return cards.size();
     }
 

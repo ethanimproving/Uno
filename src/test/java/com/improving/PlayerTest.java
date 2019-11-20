@@ -168,7 +168,7 @@ class PlayerTest {
         var player = new Player("Ethan", game);
 
         // Act
-        var result = player.chooseColor().getClass();
+        var result = player.chooseColor(game).getClass();
 
         // Assert
         assertEquals(Colors.class, result);
