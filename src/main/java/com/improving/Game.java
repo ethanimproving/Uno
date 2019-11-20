@@ -1,6 +1,7 @@
 package com.improving;
 
 import com.improving.players.IPlayer;
+import com.improving.players.IPlayerInfo;
 import com.improving.players.RandomPlayer;
 import com.improving.players.SmartPlayer;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -100,7 +101,7 @@ public class Game implements IGame {
     }
 
     public void executeSpecialCard(Card card) {
-        var nextPlayer = getPlayers().get(0).getNextPlayer(this);
+        var nextPlayer = getNextPlayer();
 
         switch (card.getFaces()) {
             case DrawTwo:
@@ -131,6 +132,37 @@ public class Game implements IGame {
     @Override
     public Card draw() {
         return deck.draw();
+    }
+
+    @Override
+    public List<IPlayerInfo> getPlayerInfo() {
+        return null;
+    }
+
+    private IPlayer getPlayer(int turnIndex) {
+        if (turnIndex <= 0) turnIndex = turnIndex + players.size();
+        int nextPlayer = turnIndex % players.size();
+        return players.get(nextPlayer);
+    }
+
+    @Override
+    public IPlayer getPreviousPlayer() {
+        return getPlayer(turnIndex - turnDirection);
+    }
+
+    @Override
+    public IPlayer getNextPlayer() {
+        return getPlayer(turnIndex + turnDirection);
+    }
+
+    @Override
+    public IPlayer getNextNextPlayer() {
+        return getPlayer(turnIndex + turnDirection * 2);
+    }
+
+    @Override
+    public IDeck getDeckInfo() {
+        return null;
     }
 
     @Override

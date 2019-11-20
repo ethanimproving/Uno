@@ -7,7 +7,6 @@ import java.util.LinkedList;
 
 public interface IPlayer extends IPlayerInfo {
 
-    int handSize();
     Card draw(IGame game);
     Card takeTurn(IGame game);
 

@@ -90,30 +90,4 @@ public abstract class BasePlayerClass implements IPlayer {
         return cards.size();
     }
 
-    @Override
-    public int getPlayerHandSize() {
-        return 0;
-    }
-
-    private IPlayer getPlayer(IGame game, int turnIndex) {
-        if (turnIndex <= 0) turnIndex = turnIndex + game.getPlayers().size();
-        int nextPlayer = turnIndex % game.getPlayers().size();
-        return game.getPlayers().get(nextPlayer);
-    }
-
-    @Override
-    public IPlayer getPrevPlayer(IGame game) {
-        var i = game.getTurnIndex() - game.getTurnDirection();
-        return getPlayer(game, i);
-    }
-
-    @Override
-    public IPlayer getNextPlayer(IGame game) {
-        return getPlayer(game, game.getTurnIndex() + game.getTurnDirection());
-    }
-
-    @Override
-    public IPlayer getNextNextPlayer(IGame game) {
-        return getPlayer(game, game.getTurnIndex() + game.getTurnDirection() * 2);
-    }
 }

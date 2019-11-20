@@ -226,4 +226,42 @@ class GameTest {
         assertEquals(2+4, result);
     }
 
+    @Test
+    void getPrevPlayer_should_return_player_whose_turn_was_last() {
+        // Arrange
+        game.addPlayer("Brian");
+        game.addPlayer("Caleb");
+
+        // Act
+        var result = game.getPreviousPlayer();
+
+        // Assert
+        assertEquals(game.getPlayers().get(3).getName(), result.getName());
+    }
+
+    @Test
+    void getNextPlayer_should_return_player_whose_turn_is_next() {
+        // Arrange
+        game.addPlayer("Brian");
+        game.addPlayer("Caleb");
+
+        // Act
+        var result = game.getNextPlayer();
+
+        // Assert
+        assertEquals(game.getPlayers().get(1), result);
+    }
+
+    @Test
+    void getNextNextPlayer_should_return_player_whose_turn_is_two_from_current() {
+        // Arrange
+        game.addPlayer("Brian");
+        game.addPlayer("Caleb");
+
+        // Act
+        var result = game.getNextNextPlayer();
+
+        // Assert
+        assertEquals(game.getPlayers().get(2), result);
+    }
 }

@@ -19,5 +19,4 @@ public class RandomPlayer extends BasePlayerClass {
         return null;
     }
 
-
 }
