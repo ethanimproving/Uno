@@ -1,9 +1,6 @@
 package com.improving;
 
-import com.improving.players.IPlayer;
-import com.improving.players.IPlayerInfo;
-import com.improving.players.RandomPlayer;
-import com.improving.players.SmartPlayer;
+import com.improving.players.*;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +35,8 @@ public class Game implements IGame {
         this.players.addAll(Arrays.asList(
                 new RandomPlayer("David O\'Hera", this),
                 new RandomPlayer("Tim Rayburn", this),
-                new SmartPlayer("Ethan Miller", this)
+                new SmartPlayer("Ethan Miller", this),
+                new RachelPlayer("Rachel Sullivan", this)
         ));
         this.playerWins = new ArrayList<>();
         this.players.forEach(p -> this.playerWins.add(0));
@@ -136,7 +134,8 @@ public class Game implements IGame {
 
     @Override
     public List<IPlayerInfo> getPlayerInfo() {
-        return null;
+        List<IPlayerInfo> playerInfo = new ArrayList<>(players);
+        return playerInfo;
     }
 
     private IPlayer getPlayer(int turnIndex) {
