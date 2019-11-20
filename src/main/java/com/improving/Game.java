@@ -166,7 +166,7 @@ public class Game implements IGame {
 
     @Override
     public void playCard(Card card, Optional<Colors> chosenColor) {
-        if (card.getColors() == null) setChosenColor(Optional.of(chosenColor).orElse(null));;
+        if (card.getFaces().getValue() == 50) setChosenColor(Optional.of(chosenColor).orElse(null));;
         deck.getDiscard().add(card);
     }
 

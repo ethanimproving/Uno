@@ -53,7 +53,7 @@ public abstract class BasePlayerClass implements IPlayer {
     }
 
     private void playCard(IGame game, Card card) {
-        if (card.getColors() == null) game.playCard(card, Optional.of(chooseColor(game)));
+        if (card.getFaces().getValue() == 50) game.playCard(card, Optional.of(chooseColor(game)));
         // TODO: make color parameter optional.
         else game.playCard(card, null);
         hand.remove(card);

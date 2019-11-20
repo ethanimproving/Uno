@@ -23,6 +23,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return (colors == null ? "" : colors.toString())+ faces.toString();
+        return (colors == Colors.Wild ? "" : colors.toString())+ faces.toString();
     }
 }

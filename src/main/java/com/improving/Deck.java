@@ -3,6 +3,7 @@ package com.improving;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class Deck implements IDeck {
@@ -13,10 +14,13 @@ public class Deck implements IDeck {
         deck = new LinkedList<>();
         discard = new LinkedList<>();
 
+        var realColors = Arrays.stream(Colors.values()).filter(c -> c.getNumber() == 1)
+                .collect(Collectors.toList());
+
         for (var face : Faces.values()) {
-            for (var color : Colors.values()) {
+            for (var color : realColors) {
                 if (face.getValue() == 50) {
-                    deck.add(new Card(null, face));
+                    deck.add(new Card(Colors.Wild, face));
                 } else {
                     deck.add(new Card(color, face));
                     deck.add(new Card(color, face));
